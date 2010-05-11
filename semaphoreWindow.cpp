@@ -6,6 +6,8 @@ SemaphoreWindow::SemaphoreWindow(QWidget *parent) :
     ui(new Ui::SemaphoreWindow)
 {
     ui->setupUi(this);
+
+    d_ = new Sem::Device(this);
 }
 
 SemaphoreWindow::~SemaphoreWindow()

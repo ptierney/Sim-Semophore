@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include <device.h>
+
 namespace Ui {
     class SemaphoreWindow;
 }
@@ -18,6 +20,7 @@ protected:
 
 private:
     Ui::SemaphoreWindow *ui;
+    Sem::Device* d_;
 };
 
 #endif // SEMAPHOREWINDOW_H
