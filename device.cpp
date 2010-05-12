@@ -28,7 +28,7 @@ namespace Sem {
 
     map_builder_ = new MapBuilder(this);
     map_builder_->init();
-    map_builder_->buildMap();
+    //map_builder_->buildMap();
   }
 
   Device::~Device(){
