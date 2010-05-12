@@ -31,6 +31,9 @@ public:
   static const int TILE_HEIGHT = 64;
   static const int LARGE_TILE_HEIGHT = 88;
 
+  int tile_width();
+  int tile_height();
+
   QImage loadImage(TileType, int, int);
   void loadTest();
   QImage cropImage(const QImage&, int x_index, int y_index,

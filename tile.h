@@ -19,6 +19,9 @@ namespace Sem {
     QRectF boundingRect() const;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
     void updateDrawRect();
+    void updateClipPath();
+
+    QPainterPath shape() const;
 
   protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
@@ -30,6 +33,7 @@ namespace Sem {
     int width_;
     int height_;
     QRectF draw_rect_;
+    QPainterPath clip_path_;
   };
 
 }

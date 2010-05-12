@@ -5,6 +5,7 @@
 #include <gameScene.h>
 #include <gameView.h>
 #include <tileImageLoader.h>
+#include <mapBuilder.h>
 
 namespace Sem {
 
@@ -23,11 +24,16 @@ namespace Sem {
 
     tile_image_loader_ = new TileImageLoader(this);
     tile_image_loader_->init();
-    tile_image_loader_->loadTest();
+    //tile_image_loader_->loadTest();
+
+    map_builder_ = new MapBuilder(this);
+    map_builder_->init();
+    map_builder_->buildMap();
   }
 
   Device::~Device(){
-    // Nothing here
+    delete map_builder_;
+    delete tile_image_loader_;
   }
 
   TileImageLoader* Device::tile_image_loader(){

@@ -12,6 +12,7 @@ namespace Sem {
   class GameScene;
   class GameView;
   class TileImageLoader;
+  class MapBuilder;
 
   class Device : public QObject {
     Q_OBJECT
@@ -30,6 +31,7 @@ namespace Sem {
     GameScene* game_scene_;
     GameView* game_view_;
     TileImageLoader* tile_image_loader_;
+    MapBuilder* map_builder_;
 
   };
 

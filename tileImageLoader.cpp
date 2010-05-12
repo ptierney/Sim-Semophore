@@ -116,4 +116,12 @@ namespace Sem {
     tile->update();
   }
 
+  int TileImageLoader::tile_width(){
+    return TILE_WIDTH;
+  }
+
+  int TileImageLoader::tile_height(){
+    return TILE_HEIGHT;
+  }
+
 }
