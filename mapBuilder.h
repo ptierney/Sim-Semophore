@@ -5,6 +5,7 @@
 #include <vector>
 
 #include <QObject>
+#include <QFile>
 
 namespace Sem {
   class Device;
@@ -19,9 +20,16 @@ namespace Sem {
 
     void buildMap();
 
+    void loadConfig();
+    void saveConfig();
+
   private:
     Device* d_;
-    std::string config_file_;
+    QString config_file_name_;
+    QFile* config_file_;
+
+    int num_tiles_x_;
+    int num_tiles_y_;
 
     std::vector<Tile*> map_tiles_;
   };

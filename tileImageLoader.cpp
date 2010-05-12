@@ -20,7 +20,7 @@ namespace Sem {
     city_image_.load("media/cities.png");
     grass_image_.load("media/g.png");
     plane_image_.load("media/p.png");
-    forest_image_.load("forests.png");
+    forest_image_.load("media/forests.png");
     hill_image_.load("media/hills.png");
     mountain_image_.load("media/mountains.png");
     farmland_image_.load("media/farmlands.png");
@@ -28,6 +28,8 @@ namespace Sem {
     road_image_.load("media/roads.png");
     railroad_image_.load("media/rails.png");
     swamp_image_.load("media/swamps.png");
+    select_image_.load("media/select-alpha.png");
+    river_image_.load("media/rivers.png");
   }
 
   QImage TileImageLoader::loadImage(TileType tile_type, int x_index, int y_index){
@@ -79,6 +81,13 @@ namespace Sem {
       temp_image = &swamp_image_;
       image_height = TILE_HEIGHT;
       break;
+    case SELECT:
+      temp_image = &select_image_;
+      image_height = TILE_HEIGHT;
+      break;
+    case RIVER:
+      temp_image = &river_image_;
+      image_height = TILE_HEIGHT;
     default:
       return city_image_;
       image_height = TILE_HEIGHT;

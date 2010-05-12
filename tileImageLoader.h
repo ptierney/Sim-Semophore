@@ -14,6 +14,7 @@ public:
   void init();
 
   enum TileType {
+    NONE,
     CITY,
     GRASSLAND,
     PLANE,
@@ -24,7 +25,9 @@ public:
     IRRIGATION,
     ROAD,
     RAILROAD,
-    SWAMP
+    RIVER,
+    SWAMP,
+    SELECT
   };
 
   static const int TILE_WIDTH = 128;
@@ -53,9 +56,8 @@ private:
   QImage road_image_;
   QImage railroad_image_;
   QImage swamp_image_;
-
-
-
+  QImage select_image_;
+  QImage river_image_;
 };
 
 }
