@@ -19,6 +19,8 @@ namespace Sem {
     terrain_type_ = TileImageLoader::NONE;
     covering_terrain_type_ = TileImageLoader::NONE;
     covering_object_type_ = TileImageLoader::NONE;
+    terrain_index_.first = 0;
+    terrain_index_.second = 0;
   }
 
   void Tile::init(){
@@ -73,24 +75,30 @@ namespace Sem {
     }
   }
 
-  void Tile::set_axon_image(const QImage& image, TileImageLoader::TileType type){
+  void Tile::set_axon_image(const QImage& image, TileImageLoader::TileType type, int x, int y){
     axon_image_ = image;
     terrain_type_ = type;
+    terrain_index_.first = x;
+    terrain_index_.second = y;
     width_ = axon_image_.width();
     height_ = axon_image_.height();
     updateDrawRect();
     updateClipPath();
   }
 
-  void Tile::set_covering_terrain(const QImage& terrain, TileImageLoader::TileType type){
+  void Tile::set_covering_terrain(const QImage& terrain, TileImageLoader::TileType type, int x, int y){
     covering_terrain_ = terrain;
     covering_terrain_type_ = type;
+    covering_terrain_index_.first = x;
+    covering_terrain_index_.second = y;
     terrain_covering_ = true;
   }
 
-  void Tile::set_covering_object(const QImage& object, TileImageLoader::TileType type){
+  void Tile::set_covering_object(const QImage& object, TileImageLoader::TileType type, int x, int y){
     covering_object_ = object;
     covering_object_type_ = type;
+    covering_object_index_.first = x;
+    covering_object_index_.second = y;
     object_covering_ = true;
   }
 
@@ -131,5 +139,16 @@ namespace Sem {
     return covering_object_type_;
   }
 
+  std::pair<int, int> Tile::terrain_index(){
+    return terrain_index_;
+  }
+
+  std::pair<int, int> Tile::covering_terrain_index(){
+    return covering_terrain_index_;
+  }
+
+  std::pair<int, int> Tile::covering_object_index(){
+    return covering_object_index_;
+  }
 
 }

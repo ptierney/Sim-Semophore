@@ -117,12 +117,12 @@ namespace Sem {
   }
 
   void TileImageLoader::loadTest(){
-    Tile* tile = new Tile(d_);
-    tile->init();
+    //Tile* tile = new Tile(d_);
+    //tile->init();
 
-    tile->set_axon_image(loadImage(MOUNTAIN, 2, 1));
-    d_->game_scene()->addItem(tile);
-    tile->update();
+    //tile->set_axon_image(loadImage(MOUNTAIN, 2, 1), 2, 1);
+    //d_->game_scene()->addItem(tile);
+    //tile->update();
   }
 
   int TileImageLoader::tile_width(){

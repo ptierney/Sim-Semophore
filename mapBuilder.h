@@ -16,6 +16,7 @@ namespace Sem {
 
   public:
     MapBuilder(Device*, QObject* parent = 0);
+    ~MapBuilder();
     void init();
 
     void buildMap();

@@ -14,7 +14,7 @@ public:
   void init();
 
   enum TileType {
-    NONE,
+    NONE = 0,
     CITY,
     GRASSLAND,
     PLANE,

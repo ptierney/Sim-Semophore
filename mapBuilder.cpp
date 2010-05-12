@@ -22,6 +22,10 @@ namespace Sem {
 
   }
 
+  MapBuilder::~MapBuilder(){
+    saveConfig();
+  }
+
 
   void MapBuilder::loadConfig(){
     config_file_ = new QFile(config_file_name_);
@@ -38,8 +42,10 @@ namespace Sem {
   }
 
   void MapBuilder::saveConfig(){
+    std::cerr << "Saving config" << std::endl;
+
     config_file_ = new QFile(config_file_name_);
-    config_file_->open(QIODevice::Truncate); // erase old contents
+    config_file_->open(QIODevice::ReadWrite | QIODevice::Truncate); // erase old contents
 
     QTextStream stream(config_file_);
 
@@ -50,13 +56,101 @@ namespace Sem {
     stream << num_x << "\n" << num_y << "\n";
 
     for(std::vector<Tile*>::const_iterator it = map_tiles_.begin(); it != map_tiles_.end(); ++it){
+      Tile* tile = (*it);
+      TileImageLoader::TileType terrain_type = tile->terrain_type();
+      TileImageLoader::TileType covering_terrain_type = tile->covering_terrain_type();
+      TileImageLoader::TileType covering_object_type = tile->covering_object_type();
 
+      if(terrain_type != TileImageLoader::NONE){
+        switch(terrain_type) {
+        case TileImageLoader::GRASSLAND:
+          stream << "1 ";
+          break;
+        case TileImageLoader::PLANE:
+          stream << "2 ";
+          break;
+        default:
+          stream << "0 ";
+          std::cerr << "ERROR saving config" << std::endl;
+          break;
+        }
 
+        QString in1, in2;
+        in1.setNum(tile->terrain_index().first);
+        in2.setNum(tile->terrain_index().second);
+        stream << in1 << " " << in2 << " ";
+      } else {
+        stream << "0 0 0 ";
+      }
+
+      if(covering_terrain_type != TileImageLoader::NONE){
+        switch(covering_terrain_type){
+        case TileImageLoader::HILL:
+          stream << "1 ";
+          break;
+        case TileImageLoader::FOREST:
+          stream << "2 ";
+          break;
+        case TileImageLoader::MOUNTAIN:
+          stream << "3 ";
+          break;
+        case TileImageLoader::SWAMP:
+          stream << "4 ";
+          break;
+        case TileImageLoader::RIVER:
+          stream << "5 ";
+          break;
+        default:
+          stream << "0 ";
+          std::cerr << "ERROR saving config" << std::endl;
+          break;
+
+        }
+
+        QString in1, in2;
+        in1.setNum(tile->covering_terrain_index().first);
+        in2.setNum(tile->covering_terrain_index().second);
+        stream << in1 << " " << in2 << " ";
+
+      } else {
+        stream << "0 0 0 ";
+      }
+
+      if(covering_object_type != TileImageLoader::NONE){
+        switch(covering_object_type){
+        case TileImageLoader::CITY:
+          stream << "1 ";
+          break;
+        case TileImageLoader::FARMLAND:
+          stream << "2 ";
+          break;
+        case TileImageLoader::IRRIGATION:
+          stream << "3 ";
+          break;
+        case TileImageLoader::ROAD:
+          stream << "4 ";
+          break;
+        case TileImageLoader::RAILROAD:
+          stream << "5 ";
+          break;
+        default:
+          stream << "0 ";
+          std::cerr << "ERROR saving config" << std::endl;
+          break;
+        }
+
+        QString in1, in2;
+        in1.setNum(tile->covering_object_index().first);
+        in2.setNum(tile->covering_object_index().second);
+        stream << in1 << " " << in2 << " ";
+      } else {
+        stream << "0 0 0";
+      }
+
+      stream << "\n";
     }
 
   }
-
-
 
   void MapBuilder::buildMap(){
     int x_spacing = d_->tile_image_loader()->tile_width();
@@ -70,9 +164,9 @@ namespace Sem {
         for(int x = 0; x < num_tiles_x_; ++x){
         Tile* tile = new Tile(d_);
         tile->init();
-        tile->set_axon_image(default_image, TileImageLoader::GRASSLAND);
-        tile->set_covering_object(default_object, TileImageLoader::RAILROAD);
-        //tile->set_covering_terrain(default_terrain, TileImageLoader::HILL);
+        tile->set_axon_image(default_image, TileImageLoader::GRASSLAND, 1, 7);
+        tile->set_covering_object(default_object, TileImageLoader::RAILROAD, 15, 15);
+        //tile->set_covering_terrain(default_terrain, TileImageLoader::HILL, 0, 0);
         x_pos = x * x_spacing;
         if(y % 2 == 0)
            x_pos -= x_spacing / 2;

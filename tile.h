@@ -23,13 +23,17 @@ namespace Sem {
 
     QPainterPath shape() const;
 
-    void set_axon_image(const QImage&, TileImageLoader::TileType);
-    void set_covering_terrain(const QImage&, TileImageLoader::TileType);
-    void set_covering_object(const QImage&, TileImageLoader::TileType);
+    void set_axon_image(const QImage&, TileImageLoader::TileType, int, int);
+    void set_covering_terrain(const QImage&, TileImageLoader::TileType, int, int);
+    void set_covering_object(const QImage&, TileImageLoader::TileType, int, int);
 
     TileImageLoader::TileType terrain_type();
     TileImageLoader::TileType covering_terrain_type();
     TileImageLoader::TileType covering_object_type();
+
+    std::pair<int, int> terrain_index();
+    std::pair<int, int> covering_terrain_index();
+    std::pair<int, int> covering_object_index();
 
   protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
@@ -38,16 +42,19 @@ namespace Sem {
     Device* d_;
     QImage axon_image_;
     TileImageLoader::TileType terrain_type_;
+    std::pair<int, int> terrain_index_;
     QImage selected_icon_;
     bool selected_;
     // Covering terrain is forest or mountains
     QImage covering_terrain_;
     bool terrain_covering_;
     TileImageLoader::TileType covering_terrain_type_;
+    std::pair<int, int> covering_terrain_index_;
     // Covering object is a road, rail, or city
     QImage covering_object_;
     bool object_covering_;
     TileImageLoader::TileType covering_object_type_;
+    std::pair<int, int> covering_object_index_;
 
     int width_;
     int height_;
