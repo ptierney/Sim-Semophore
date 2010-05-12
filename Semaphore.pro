@@ -9,10 +9,12 @@ SOURCES += main.cpp \
     tileImageLoader.cpp \
     gameScene.cpp \
     gameView.cpp \
-    device.cpp
+    device.cpp \
+    tile.cpp
 HEADERS += semaphoreWindow.h \
     tileImageLoader.h \
     gameScene.h \
     gameView.h \
-    device.h
+    device.h \
+    tile.h
 FORMS += semaphoreWindow.ui

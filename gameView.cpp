@@ -1,5 +1,8 @@
 
+#include <math.h>
+
 #include <QGLWidget>
+#include <QWheelEvent>
 
 #include <gameView.h>
 #include <gameScene.h>
@@ -8,7 +11,11 @@ namespace Sem {
   GameView::GameView(Device* d, GameScene* scene) :
       QGraphicsView(scene) {
     d_ = d;
+    setScene(scene);
+    game_scene_ = scene;
+  }
 
+  void GameView::init(){
     if(USE_OPENGL){
       QGLFormat format;
       format.setSampleBuffers(true);
@@ -17,12 +24,20 @@ namespace Sem {
       setViewport(gl_widget);
     }
 
-    setScene(scene);
-
     setTransformationAnchor(AnchorUnderMouse);
     setResizeAnchor(AnchorViewCenter);
 
     setDragMode( QGraphicsView::ScrollHandDrag);
+
+    setMinimumSize(game_scene_->DEFAULT_WINDOW_WIDTH,
+                   game_scene_->DEFAULT_WINDOW_HEIGHT);
   }
 
+  void GameView::wheelEvent(QWheelEvent* event) {
+    scaleView(pow((double)2, event->delta() / 240.0));
+  }
+
+  void GameView::scaleView(qreal scale_factor){
+    scale(scale_factor, scale_factor);
+  }
 }

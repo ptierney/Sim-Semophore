@@ -8,10 +8,12 @@ SemaphoreWindow::SemaphoreWindow(QWidget *parent) :
     ui->setupUi(this);
 
     d_ = new Sem::Device(this);
+    d_->init();
 }
 
 SemaphoreWindow::~SemaphoreWindow()
 {
+    delete d_;
     delete ui;
 }
 

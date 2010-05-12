@@ -22,6 +22,7 @@ namespace Sem {
     void init();
 
     TileImageLoader* tile_image_loader();
+    GameScene* game_scene();
 
   private:
     QMainWindow* main_window_;

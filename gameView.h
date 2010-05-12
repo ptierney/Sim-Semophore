@@ -12,11 +12,17 @@ namespace Sem {
 
   public:
     GameView(Device*, GameScene* scene);
+    void init();
 
     static const bool USE_OPENGL = true;
 
+  protected:
+    void wheelEvent(QWheelEvent* event);
+    void scaleView(qreal);
+
   private:
     Device* d_;
+    GameScene* game_scene_;
   };
 }
 

@@ -11,6 +11,8 @@ namespace Sem {
 
   public:
     GameScene(Device*, QObject* parent = 0);
+    void init();
+
     QSize sizeHint() const;
 
     static const int DEFAULT_WINDOW_WIDTH = 640;
