@@ -17,8 +17,8 @@ namespace Sem {
       QObject(parent) {
     d_ = d;
     config_file_name_ = "config.txt";
-    num_tiles_x_ = 25;
-    num_tiles_y_ = 100;
+    num_tiles_x_ = 111;
+    num_tiles_y_ = 90 * 2;
   }
 
   void MapBuilder::init() {
