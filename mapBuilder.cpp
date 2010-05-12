@@ -9,6 +9,7 @@
 #include <tile.h>
 #include <tileImageLoader.h>
 #include <gameScene.h>
+#include <mapChanger.h>
 
 namespace Sem {
 
@@ -16,11 +17,13 @@ namespace Sem {
       QObject(parent) {
     d_ = d;
     config_file_name_ = "config.txt";
+    num_tiles_x_ = 25;
+    num_tiles_y_ = 100;
   }
 
   void MapBuilder::init() {
-    loadConfig();
 
+    loadConfig();
   }
 
   MapBuilder::~MapBuilder(){
@@ -275,7 +278,7 @@ namespace Sem {
         Tile* tile = new Tile(d_);
         tile->init();
         tile->set_axon_image(default_image, TileImageLoader::GRASSLAND, 1, 7);
-        tile->set_covering_object(default_object, TileImageLoader::RAILROAD, 15, 15);
+        //tile->set_covering_object(default_object, TileImageLoader::RAILROAD, 15, 15);
         //tile->set_covering_terrain(default_terrain, TileImageLoader::HILL, 0, 0);
         x_pos = x * x_spacing;
         if(y % 2 == 0)

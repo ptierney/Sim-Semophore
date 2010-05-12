@@ -27,6 +27,7 @@ public:
     RAILROAD,
     RIVER,
     SWAMP,
+    SEMAPHORE,
     SELECT
   };
 
@@ -58,6 +59,7 @@ private:
   QImage swamp_image_;
   QImage select_image_;
   QImage river_image_;
+  QImage semaphore_image_;
 };
 
 }

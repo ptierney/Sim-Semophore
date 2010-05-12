@@ -6,6 +6,7 @@
 #include <gameView.h>
 #include <tileImageLoader.h>
 #include <mapBuilder.h>
+#include <mapChanger.h>
 
 namespace Sem {
 
@@ -27,13 +28,25 @@ namespace Sem {
     //tile_image_loader_->loadTest();
 
     map_builder_ = new MapBuilder(this);
-    map_builder_->init();
+    map_builder_->init(); // loads config, builds map
     //map_builder_->buildMap();
+
+    createMapChanger();
   }
 
   Device::~Device(){
     delete map_builder_;
     delete tile_image_loader_;
+  }
+
+  void Device::createMapChanger(){
+    QDockWidget* dock = new QDockWidget(tr("Map Changer"), main_window_);
+    dock->setFloating(1);
+    map_changer_ = new MapChanger(this, dock);
+    map_changer_->init();
+    dock->setWidget(map_changer_);
+    dock->setAllowedAreas(Qt::NoDockWidgetArea);
+    main_window_->addDockWidget(Qt::LeftDockWidgetArea, dock);
   }
 
   TileImageLoader* Device::tile_image_loader(){
@@ -42,6 +55,10 @@ namespace Sem {
 
   GameScene* Device::game_scene(){
     return game_scene_;
+  }
+
+  MapChanger* Device::map_changer(){
+    return map_changer_;
   }
 
 }

@@ -10,6 +10,7 @@
 namespace Sem {
   class Device;
   class Tile;
+  class MapChanger;
 
   class MapBuilder : public QObject {
     Q_OBJECT
@@ -24,8 +25,11 @@ namespace Sem {
     void loadConfig();
     void saveConfig();
 
+    MapChanger* map_changer();
+
   private:
     Device* d_;
+    MapChanger* map_changer_;
     QString config_file_name_;
     QFile* config_file_;
 

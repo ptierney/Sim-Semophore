@@ -11,12 +11,14 @@ SOURCES += main.cpp \
     gameView.cpp \
     device.cpp \
     tile.cpp \
-    mapBuilder.cpp
+    mapBuilder.cpp \
+    mapChanger.cpp
 HEADERS += semaphoreWindow.h \
     tileImageLoader.h \
     gameScene.h \
     gameView.h \
     device.h \
     tile.h \
-    mapBuilder.h
+    mapBuilder.h \
+    mapChanger.h
 FORMS += semaphoreWindow.ui

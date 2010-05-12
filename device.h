@@ -13,6 +13,7 @@ namespace Sem {
   class GameView;
   class TileImageLoader;
   class MapBuilder;
+  class MapChanger;
 
   class Device : public QObject {
     Q_OBJECT
@@ -24,6 +25,7 @@ namespace Sem {
 
     TileImageLoader* tile_image_loader();
     GameScene* game_scene();
+    MapChanger* map_changer();
 
   private:
     QMainWindow* main_window_;
@@ -32,6 +34,9 @@ namespace Sem {
     GameView* game_view_;
     TileImageLoader* tile_image_loader_;
     MapBuilder* map_builder_;
+    MapChanger* map_changer_;
+
+    void createMapChanger();
 
   };
 

@@ -1,6 +1,8 @@
 
 #include <math.h>
 
+#include <iostream>
+
 #include <QGLWidget>
 #include <QWheelEvent>
 
@@ -34,10 +36,10 @@ namespace Sem {
   }
 
   void GameView::wheelEvent(QWheelEvent* event) {
-    scaleView(pow((double)2, event->delta() / 240.0));
+    scaleView(pow((double)2, event->delta() / 540.0));
   }
 
   void GameView::scaleView(qreal scale_factor){
-    scale(scale_factor, scale_factor);
+      scale(scale_factor, scale_factor);
   }
 }

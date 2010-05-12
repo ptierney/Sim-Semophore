@@ -30,6 +30,7 @@ namespace Sem {
     swamp_image_.load("media/swamps.png");
     select_image_.load("media/select-alpha.png");
     river_image_.load("media/rivers.png");
+    semaphore_image_.load("media/semaphore.png");
   }
 
   QImage TileImageLoader::loadImage(TileType tile_type, int x_index, int y_index){
@@ -88,6 +89,11 @@ namespace Sem {
     case RIVER:
       temp_image = &river_image_;
       image_height = TILE_HEIGHT;
+      break;
+    case SEMAPHORE:
+      temp_image = &semaphore_image_;
+      image_height = LARGE_TILE_HEIGHT;
+      break;
     default:
       return city_image_;
       image_height = TILE_HEIGHT;

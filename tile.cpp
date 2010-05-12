@@ -7,6 +7,7 @@
 #include <device.h>
 #include <gameScene.h>
 #include <tileImageLoader.h>
+#include <mapChanger.h>
 
 namespace Sem {
 
@@ -54,7 +55,8 @@ namespace Sem {
 
     if(terrain_covering_) {
       int terrain_covering_height = -height_;
-      if(covering_terrain_type_ != TileImageLoader::HILL)
+      if(covering_terrain_type_ == TileImageLoader::FOREST ||
+         covering_terrain_type_ == TileImageLoader::MOUNTAIN)
         terrain_covering_height -= 24;
 
       painter->drawImage(QPoint(-width_/2.0,
@@ -63,8 +65,11 @@ namespace Sem {
     }
 
     if(object_covering_){
+      int object_covering_height = -height_;
+      if(covering_object_type_ == TileImageLoader::SEMAPHORE)
+        object_covering_height -= 24;
       painter->drawImage(QPoint(-width_/2.0,
-                                -height_),
+                                object_covering_height),
                          covering_object_);
     }
 
@@ -122,8 +127,9 @@ namespace Sem {
     clip_path_.addPolygon(diamond);
   }
 
-  void Tile::mousePressEvent(QGraphicsSceneMouseEvent* event){
+  void Tile::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/){
     selected_ = !selected_;
+    d_->map_changer()->objectSelected(this);
     update();
   }
 
