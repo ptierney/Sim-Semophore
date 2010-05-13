@@ -66,7 +66,7 @@ namespace Sem {
         tile->init();
 
         line = stream.readLine();
-        list = line.split(tr(" "));
+        list = line.split(tr(","));
 
         parse = list[0].toInt();
 
@@ -182,13 +182,13 @@ namespace Sem {
       if(terrain_type != TileImageLoader::NONE){
         switch(terrain_type) {
         case TileImageLoader::GRASSLAND:
-          stream << "1 ";
+          stream << "1,";
           break;
         case TileImageLoader::PLANE:
-          stream << "2 ";
+          stream << "2,";
           break;
         default:
-          stream << "0 ";
+          stream << "0,";
           std::cerr << "ERROR saving config" << std::endl;
           break;
         }
@@ -196,30 +196,30 @@ namespace Sem {
         QString in1, in2;
         in1.setNum(tile->terrain_index().first);
         in2.setNum(tile->terrain_index().second);
-        stream << in1 << " " << in2 << " ";
+        stream << in1 << "," << in2 << ",";
       } else {
-        stream << "0 0 0 ";
+        stream << "0,0,0,";
       }
 
       if(covering_terrain_type != TileImageLoader::NONE){
         switch(covering_terrain_type){
         case TileImageLoader::HILL:
-          stream << "1 ";
+          stream << "1,";
           break;
         case TileImageLoader::FOREST:
-          stream << "2 ";
+          stream << "2,";
           break;
         case TileImageLoader::MOUNTAIN:
-          stream << "3 ";
+          stream << "3,";
           break;
         case TileImageLoader::SWAMP:
           stream << "4 ";
           break;
         case TileImageLoader::RIVER:
-          stream << "5 ";
+          stream << "5,";
           break;
         default:
-          stream << "0 ";
+          stream << "0,";
           std::cerr << "ERROR saving config" << std::endl;
           break;
 
@@ -228,31 +228,31 @@ namespace Sem {
         QString in1, in2;
         in1.setNum(tile->covering_terrain_index().first);
         in2.setNum(tile->covering_terrain_index().second);
-        stream << in1 << " " << in2 << " ";
+        stream << in1 << "," << in2 << ",";
 
       } else {
-        stream << "0 0 0 ";
+        stream << "0,0,0,";
       }
 
       if(covering_object_type != TileImageLoader::NONE){
         switch(covering_object_type){
         case TileImageLoader::CITY:
-          stream << "1 ";
+          stream << "1,";
           break;
         case TileImageLoader::FARMLAND:
-          stream << "2 ";
+          stream << "2,";
           break;
         case TileImageLoader::IRRIGATION:
-          stream << "3 ";
+          stream << "3,";
           break;
         case TileImageLoader::ROAD:
-          stream << "4 ";
+          stream << "4,";
           break;
         case TileImageLoader::RAILROAD:
-          stream << "5 ";
+          stream << "5,";
           break;
         default:
-          stream << "0 ";
+          stream << "0,";
           std::cerr << "ERROR saving config" << std::endl;
           break;
         }
@@ -260,17 +260,17 @@ namespace Sem {
         QString in1, in2;
         in1.setNum(tile->covering_object_index().first);
         in2.setNum(tile->covering_object_index().second);
-        stream << in1 << " " << in2 << " ";
+        stream << in1 << "," << in2 << ",";
       } else {
-        stream << "0 0 0";
+        stream << "0,0,0,";
       }
 
       stream << tile->arrondissement();
 
       if(tile->show_text())
-        stream << "1";
+        stream << ",1";
       else
-        stream << "0";
+        stream << ",0";
 
       stream << "\n";
     }

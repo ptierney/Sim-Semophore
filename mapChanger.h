@@ -32,6 +32,9 @@ namespace Sem {
     QLineEdit* covering_terrain_index_2;
     QLineEdit* covering_object_index_1;
     QLineEdit* covering_object_index_2;
+
+    QLineEdit* arrondissement_;
+    QCheckBox* show_text_;
   };
 
 

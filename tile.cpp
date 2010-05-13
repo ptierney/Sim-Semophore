@@ -95,6 +95,13 @@ namespace Sem {
                                 -height_),
                          selected_icon_);
     }
+
+    /*
+    if(selected_ || show_text_){
+      painter->drawText(QPointF(width_/2.0, -height_/2.0),
+                        arrondissement_);
+    }
+    */
   }
 
   void Tile::set_axon_image(const QImage& image, TileImageLoader::TileType type, int x, int y){
@@ -153,6 +160,7 @@ namespace Sem {
     //d_->map_changer()->objectSelected(this);
     d_->info_box()->registerSelect(this);
     d_->tower_creator()->registerClick(this);
+
     update();
   }
 
@@ -292,8 +300,19 @@ namespace Sem {
     return show_text_;
   }
 
+  // Note this function should only be called once
   void Tile::set_show_text(bool text){
     show_text_ = text;
+
+    if(text){
+      QGraphicsTextItem* text_object = new QGraphicsTextItem();
+      text_object->setDefaultTextColor(Qt::white);
+      text_object->setPlainText(arrondissement_);
+      text_object->setPos(QPointF(pos().x() + width_/ 4.0,
+                                  pos().y() - height_/2.0 -
+                                  text_object->boundingRect().height()/2.0));
+      d_->game_scene()->addItem(text_object);
+    }
   }
 
   bool Tile::arrondissement_set(){
