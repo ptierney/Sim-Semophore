@@ -39,9 +39,15 @@ namespace Sem {
     int cost();
     int elevation();
     Tower* tower();
+    void set_tower(Tower*);
+
+    void set_ghosted_tower(bool);
+    void set_selected(bool);
+    bool selected();
 
   protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
 
   private:
     Device* d_;
@@ -61,6 +67,9 @@ namespace Sem {
     TileImageLoader::TileType covering_object_type_;
     std::pair<int, int> covering_object_index_;
 
+    QImage tower_object_;
+    bool ghosted_tower_;
+
     int elevation_;
     Tower* tower_;
 
@@ -68,6 +77,8 @@ namespace Sem {
     int height_;
     QRectF draw_rect_;
     QPainterPath clip_path_;
+
+    void drawTower(QPainter*);
   };
 
 }

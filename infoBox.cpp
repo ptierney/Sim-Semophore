@@ -10,6 +10,7 @@ namespace Sem {
     d_ = d;
     terrain_layout_ = NULL;
     semaphore_layout_ = NULL;
+    last_tile_ = NULL;
   }
 
   void InfoBox::init(){
@@ -35,12 +36,19 @@ namespace Sem {
   }
 
   void InfoBox::registerSelect(Tile* tile){
+    tile->set_selected(true);
+    tile->update();
+    if(last_tile_){
+      last_tile_->set_selected(false);
+      last_tile_->update();
+    }
     if(tile->tower())
       return;
 
     updateTerrainValues(tile);
     createTerrainLayout();
     update();
+    last_tile_ = tile;
   }
 
   void InfoBox::updateTerrainValues(Tile* tile){

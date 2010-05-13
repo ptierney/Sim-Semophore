@@ -15,12 +15,22 @@ public:
     SemaphoreWindow(QWidget *parent = 0);
     ~SemaphoreWindow();
 
+  public slots:
+    void buildSemaphore();
+
 protected:
     void changeEvent(QEvent *e);
 
 private:
     Ui::SemaphoreWindow *ui;
     Sem::Device* d_;
+
+    QMenu* build_menu_;
+    QAction* build_semaphore_;
+
+    void createMenus();
+    void createActions();
+
 };
 
 #endif // SEMAPHOREWINDOW_H

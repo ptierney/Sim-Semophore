@@ -11,6 +11,7 @@
 #include <gameState.h>
 #include <dateBox.h>
 #include <infoBox.h>
+#include <towerCreator.h>
 
 namespace Sem {
 
@@ -30,6 +31,8 @@ namespace Sem {
     map_builder_ = new MapBuilder(this);
     map_builder_->init(); // loads config, builds map
     //map_builder_->buildMap();
+    tower_creator_ = new TowerCreator(this);
+    tower_creator_->init();
 
     game_view_ = new GameView(this, game_scene_);
     game_view_->init();
@@ -107,6 +110,10 @@ namespace Sem {
 
   InfoBox* Device::info_box(){
     return info_box_;
+  }
+
+  TowerCreator* Device::tower_creator(){
+    return tower_creator_;
   }
 
 }

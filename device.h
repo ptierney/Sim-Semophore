@@ -18,6 +18,7 @@ namespace Sem {
   class GameState;
   class DateBox;
   class InfoBox;
+  class TowerCreator;
 
   class Device : public QObject {
     Q_OBJECT
@@ -32,6 +33,7 @@ namespace Sem {
     MapChanger* map_changer();
     GameState* game_state();
     InfoBox* info_box();
+    TowerCreator* tower_creator();
 
   private:
     QMainWindow* main_window_;
@@ -45,12 +47,12 @@ namespace Sem {
     GameState* game_state_;
     DateBox* date_box_;
     InfoBox* info_box_;
+    TowerCreator* tower_creator_;
 
     void createMapChanger();
     void createMiniMap();
     void createDateBox();
     void createInfoBox();
-
   };
 
 }

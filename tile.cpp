@@ -11,6 +11,7 @@
 #include <gameState.h>
 #include <tower.h>
 #include <infoBox.h>
+#include <towerCreator.h>
 
 namespace Sem {
 
@@ -38,8 +39,10 @@ namespace Sem {
     setBoundingRegionGranularity(0.9);
 
     setAcceptedMouseButtons(Qt::LeftButton);
+    setAcceptsHoverEvents(true);
     //setFlag(QGraphicsItem::ItemClipsToShape, true);
     selected_icon_ = d_->tile_image_loader()->loadImage(TileImageLoader::SELECT, 0, 0);
+    tower_object_ = d_->tile_image_loader()->loadImage(TileImageLoader::SEMAPHORE, 0, 0);
   }
 
   QRectF Tile::boundingRect() const{
@@ -73,12 +76,13 @@ namespace Sem {
     }
 
     if(object_covering_){
-      int object_covering_height = -height_;
-      if(covering_object_type_ == TileImageLoader::SEMAPHORE)
-        object_covering_height -= 24;
       painter->drawImage(QPoint(-width_/2.0,
-                                object_covering_height),
+                                -height_),
                          covering_object_);
+    }
+
+    if(tower_ || ghosted_tower_){
+      drawTower(painter);
     }
 
     if(selected_){
@@ -141,10 +145,14 @@ namespace Sem {
   }
 
   void Tile::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/){
-    selected_ = !selected_;
     //d_->map_changer()->objectSelected(this);
     d_->info_box()->registerSelect(this);
+    d_->tower_creator()->registerClick(this);
     update();
+  }
+
+  void Tile::hoverEnterEvent(QGraphicsSceneHoverEvent* /*event*/){
+    d_->tower_creator()->registerEnter(this);
   }
 
   TileImageLoader::TileType Tile::terrain_type(){
@@ -223,8 +231,31 @@ namespace Sem {
     return tower_;
   }
 
+  void Tile::set_tower(Tower* tower){
+    tower_ = tower;
+  }
+
   int Tile::elevation(){
     return elevation_;
+  }
+
+  void Tile::drawTower(QPainter* painter){
+    painter->drawImage(QPoint(-width_/2.0,
+                              -height_ - 24),
+                       tower_object_);
+
+  }
+
+  void Tile::set_ghosted_tower(bool ghosted){
+    ghosted_tower_ = ghosted;
+  }
+
+  void Tile::set_selected(bool select){
+    selected_ = select;
+  }
+
+  bool Tile::selected(){
+    return selected_;
   }
 
 }

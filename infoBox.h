@@ -23,6 +23,7 @@ namespace Sem {
 
   private:
     Device* d_;
+    Tile* last_tile_;
 
     QVBoxLayout* terrain_layout_;
     QVBoxLayout* semaphore_layout_;
