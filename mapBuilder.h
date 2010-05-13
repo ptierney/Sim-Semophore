@@ -27,6 +27,9 @@ namespace Sem {
 
     MapChanger* map_changer();
 
+    int num_tiles_x();
+    int num_tiles_y();
+
   private:
     Device* d_;
     MapChanger* map_changer_;

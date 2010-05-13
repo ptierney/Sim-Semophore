@@ -12,7 +12,13 @@ SOURCES += main.cpp \
     device.cpp \
     tile.cpp \
     mapBuilder.cpp \
-    mapChanger.cpp
+    mapChanger.cpp \
+    miniMapView.cpp \
+    dateBox.cpp \
+    infoBox.cpp \
+    gameState.cpp \
+    tower.cpp \
+    engineer.cpp
 HEADERS += semaphoreWindow.h \
     tileImageLoader.h \
     gameScene.h \
@@ -20,5 +26,11 @@ HEADERS += semaphoreWindow.h \
     device.h \
     tile.h \
     mapBuilder.h \
-    mapChanger.h
+    mapChanger.h \
+    miniMapView.h \
+    dateBox.h \
+    infoBox.h \
+    gameState.h \
+    tower.h \
+    engineer.h
 FORMS += semaphoreWindow.ui

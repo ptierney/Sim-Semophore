@@ -294,6 +294,12 @@ namespace Sem {
 
   }
 
+  int MapBuilder::num_tiles_x(){
+    return num_tiles_x_;
+  }
 
+  int MapBuilder::num_tiles_y(){
+    return num_tiles_y_;
+  }
 
 }

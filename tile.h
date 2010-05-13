@@ -9,6 +9,7 @@
 
 namespace Sem {
   class Device;
+  class Tower;
 
   class Tile : public QGraphicsObject {
     Q_OBJECT
@@ -35,6 +36,10 @@ namespace Sem {
     std::pair<int, int> covering_terrain_index();
     std::pair<int, int> covering_object_index();
 
+    int cost();
+    int elevation();
+    Tower* tower();
+
   protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
@@ -55,6 +60,9 @@ namespace Sem {
     bool object_covering_;
     TileImageLoader::TileType covering_object_type_;
     std::pair<int, int> covering_object_index_;
+
+    int elevation_;
+    Tower* tower_;
 
     int width_;
     int height_;

@@ -8,6 +8,9 @@
 #include <gameScene.h>
 #include <tileImageLoader.h>
 #include <mapChanger.h>
+#include <gameState.h>
+#include <tower.h>
+#include <infoBox.h>
 
 namespace Sem {
 
@@ -23,7 +26,10 @@ namespace Sem {
     terrain_index_.first = 0;
     terrain_index_.second = 0;
 
+    elevation_ = qrand() % 100;
+
     axon_image_ = QImage();
+    tower_ = NULL;
   }
 
   void Tile::init(){
@@ -99,6 +105,11 @@ namespace Sem {
     covering_terrain_index_.first = x;
     covering_terrain_index_.second = y;
     terrain_covering_ = true;
+
+    if(covering_terrain_type_ == TileImageLoader::HILL)
+      elevation_ = 250 + qrand() % 1250;
+    else if(covering_terrain_type_ == TileImageLoader::MOUNTAIN)
+      elevation_ = 1500 + qrand() % 5000;
   }
 
   void Tile::set_covering_object(const QImage& object, TileImageLoader::TileType type, int x, int y){
@@ -131,7 +142,8 @@ namespace Sem {
 
   void Tile::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/){
     selected_ = !selected_;
-    d_->map_changer()->objectSelected(this);
+    //d_->map_changer()->objectSelected(this);
+    d_->info_box()->registerSelect(this);
     update();
   }
 
@@ -157,6 +169,62 @@ namespace Sem {
 
   std::pair<int, int> Tile::covering_object_index(){
     return covering_object_index_;
+  }
+
+  int Tile::cost(){
+    int c = 0;
+
+    switch(terrain_type_){
+    case TileImageLoader::GRASSLAND:
+      c += d_->game_state()->grass_cost();
+      break;
+    case TileImageLoader::PLANE:
+      c += d_->game_state()->plane_cost();
+      break;
+    default:
+      break;
+    }
+
+    switch(covering_terrain_type_){
+    case TileImageLoader::FOREST:
+      c += d_->game_state()->forest_cost();
+      break;
+    case TileImageLoader::HILL:
+      c += d_->game_state()->hill_cost();
+      break;
+    case TileImageLoader::MOUNTAIN:
+      c += d_->game_state()->mountain_cost();
+      break;
+    default:
+      break;
+    }
+
+    switch(covering_object_type_){
+    case TileImageLoader::CITY:
+      c += d_->game_state()->city_cost();
+      break;
+    case TileImageLoader::FARMLAND:
+      c += d_->game_state()->farm_cost();
+      break;
+    case TileImageLoader::RAILROAD:
+      c += d_->game_state()->railroad_cost();
+      break;
+    default:
+      break;
+    }
+
+    if( c < 0)
+      c = 0;
+
+    return c;
+  }
+
+  Tower* Tile::tower(){
+    return tower_;
+  }
+
+  int Tile::elevation(){
+    return elevation_;
   }
 
 }
