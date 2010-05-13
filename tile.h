@@ -38,12 +38,22 @@ namespace Sem {
 
     int cost();
     int elevation();
+    const QString& arrondissement();
+    void set_arrondissement(const QString&);
+    bool arrondissement_set();
     Tower* tower();
     void set_tower(Tower*);
 
     void set_ghosted_tower(bool);
     void set_selected(bool);
     bool selected();
+    bool show_text();
+    void set_show_text(bool);
+
+    void set_x_index(int);
+    void set_y_index(int);
+    int x_index();
+    int y_index();
 
   protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
@@ -72,11 +82,17 @@ namespace Sem {
 
     int elevation_;
     Tower* tower_;
+    QString arrondissement_;
+    bool show_text_;
+    bool arrondissement_set_;
 
     int width_;
     int height_;
     QRectF draw_rect_;
     QPainterPath clip_path_;
+
+    int x_index_;
+    int y_index_;
 
     void drawTower(QPainter*);
   };

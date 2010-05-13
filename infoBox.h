@@ -8,11 +8,16 @@ namespace Sem {
   class Device;
   class Tile;
   class Tower;
+  class TowerInfoWidget;
+  class TerrainInfoWidget;
 
   class InfoBox : public QWidget {
   public:
     InfoBox(Device*, QWidget* parent = 0);
     void init();
+
+    friend class TowerInfoWidget;
+    friend class TerrainInfoWidget;
 
     enum SelectType {
       TERRAIN,
@@ -25,25 +30,36 @@ namespace Sem {
     Device* d_;
     Tile* last_tile_;
 
+    TowerInfoWidget* tower_widget_;
+    TerrainInfoWidget* terrain_widget_;
+
     QVBoxLayout* terrain_layout_;
-    QVBoxLayout* semaphore_layout_;
+    QVBoxLayout* tower_layout_;
+    QVBoxLayout* main_layout_;
+    QWidget* main_widget_;
 
     QLabel* cost_;
     QLabel* elevation_;
 
+    QLabel* engineers_;
     QLabel* engineer_1_;
     QLabel* engineer_2_;
 
-    QLabel* semaphore_1_;
-    QLabel* semaphore_2_;
+    QLabel* tower_name_;
+    QLabel* towers_;
+    QLabel* tower_1_;
+    QLabel* tower_2_;
 
     QLabel* operating_since_;
     QLabel* operating_percentage_;
     QLabel* message_rate_;
 
     void updateTerrainValues(Tile*);
-    void updateSemaphoreValues(Tower*);
+    void updateTowerValues(Tower*);
     void createTerrainLayout();
+    void createTowerLayout();
+
+    void deleteLayouts();
   };
 }
 

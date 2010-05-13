@@ -31,6 +31,9 @@ namespace Sem {
 
     axon_image_ = QImage();
     tower_ = NULL;
+    arrondissement_ = "Region sauvage";
+    arrondissement_set_ = false;
+    show_text_ = false;
   }
 
   void Tile::init(){
@@ -256,6 +259,43 @@ namespace Sem {
 
   bool Tile::selected(){
     return selected_;
+  }
+
+  void Tile::set_x_index(int index){
+    x_index_ = index;
+  }
+
+  void Tile::set_y_index(int index){
+    y_index_ = index;
+  }
+
+  int Tile::x_index(){
+    return x_index_;
+  }
+
+  int Tile::y_index(){
+    return y_index_;
+  }
+
+  const QString& Tile::arrondissement(){
+    return arrondissement_;
+  }
+
+  void Tile::set_arrondissement(const QString& arrond){
+    arrondissement_ = arrond;
+    arrondissement_set_ = true;
+  }
+
+  bool Tile::show_text(){
+    return show_text_;
+  }
+
+  void Tile::set_show_text(bool text){
+    show_text_ = text;
+  }
+
+  bool Tile::arrondissement_set(){
+    return arrondissement_set_;
   }
 
 }

@@ -19,7 +19,9 @@ SOURCES += main.cpp \
     gameState.cpp \
     tower.cpp \
     engineer.cpp \
-    towerCreator.cpp
+    towerCreator.cpp \
+    terrainInfoWidget.cpp \
+    towerInfoWidget.cpp
 HEADERS += semaphoreWindow.h \
     tileImageLoader.h \
     gameScene.h \
@@ -34,5 +36,7 @@ HEADERS += semaphoreWindow.h \
     gameState.h \
     tower.h \
     engineer.h \
-    towerCreator.h
+    towerCreator.h \
+    terrainInfoWidget.h \
+    towerInfoWidget.h
 FORMS += semaphoreWindow.ui

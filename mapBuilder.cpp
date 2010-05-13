@@ -149,6 +149,8 @@ namespace Sem {
         if(y % 2 == 0)
            x_pos -= x_spacing / 2;
         tile->setPos(x_pos, y * y_spacing);
+        tile->set_x_index(x);
+        tile->set_y_index(y);
         d_->game_scene()->addItem(tile);
         map_tiles_.push_back(tile);
       }
@@ -262,6 +264,13 @@ namespace Sem {
       } else {
         stream << "0 0 0";
       }
+
+      stream << tile->arrondissement();
+
+      if(tile->show_text())
+        stream << "1";
+      else
+        stream << "0";
 
       stream << "\n";
     }

@@ -43,7 +43,7 @@ namespace Sem {
 
     QString money;
     money.setNum(d_->game_state()->money());
-    money_->setText(tr("Money: Fr") + money);
+    money_->setText(tr("Money: Fr. ") + money);
 
     title_->setText(tr("Title: ") + d_->game_state()->titleString());
     rank_->setText(tr("Rank: ") + d_->game_state()->rankString());

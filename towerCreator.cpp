@@ -44,6 +44,7 @@ namespace Sem {
     last_hover_tile_->set_ghosted_tower(false);
     tile->set_ghosted_tower(false);
     Tower* tower = new Tower(d_, tile);
+    tower->init();
     tile->set_tower(tower);
     // Make a new tower, place it
   }
