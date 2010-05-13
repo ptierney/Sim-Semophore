@@ -34,6 +34,8 @@ namespace Sem {
     arrondissement_ = "Region sauvage";
     arrondissement_set_ = false;
     show_text_ = false;
+    selected_ = false;
+    ghosted_tower_ = false;
   }
 
   void Tile::init(){

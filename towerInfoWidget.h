@@ -20,6 +20,7 @@ namespace Sem {
   private:
     Device* d_;
     InfoBox* info_box_;
+    int spacing_;
 
     QVBoxLayout* layout_;
   };
