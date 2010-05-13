@@ -22,6 +22,8 @@ namespace Sem {
     covering_object_type_ = TileImageLoader::NONE;
     terrain_index_.first = 0;
     terrain_index_.second = 0;
+
+    axon_image_ = QImage();
   }
 
   void Tile::init(){

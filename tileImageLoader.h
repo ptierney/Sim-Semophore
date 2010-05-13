@@ -1,6 +1,8 @@
 #ifndef TILEIMAGELOADER_H
 #define TILEIMAGELOADER_H
 
+#include <map>
+
 #include <QImage>
 
 namespace Sem {
@@ -60,6 +62,8 @@ private:
   QImage select_image_;
   QImage river_image_;
   QImage semaphore_image_;
+
+  std::map<TileType, std::map<int, std::map<int, QImage> > > image_cache_;
 };
 
 }

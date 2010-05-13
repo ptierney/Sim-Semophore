@@ -37,6 +37,10 @@ namespace Sem {
     QImage* temp_image;
     int image_height;
 
+    QImage found_image = image_cache_[tile_type][x_index][y_index];
+    if( found_image.width() != 0 )
+      return found_image;
+
     switch(tile_type) {
     case CITY:
       temp_image = &city_image_;
@@ -99,7 +103,9 @@ namespace Sem {
       image_height = TILE_HEIGHT;
     }
 
-    return cropImage(*temp_image, x_index, y_index, image_height);
+    found_image = cropImage(*temp_image, x_index, y_index, image_height);
+    image_cache_[tile_type][x_index][y_index] = found_image;
+    return found_image;
   }
 
   QImage TileImageLoader::cropImage(const QImage& image, int x_index, int y_index,

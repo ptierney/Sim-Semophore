@@ -17,8 +17,8 @@ namespace Sem {
       QObject(parent) {
     d_ = d;
     config_file_name_ = "config.txt";
-    num_tiles_x_ = 111;
-    num_tiles_y_ = 90 * 2;
+    num_tiles_x_ = 250;
+    num_tiles_y_ = 250 * 2;
   }
 
   void MapBuilder::init() {
@@ -28,6 +28,9 @@ namespace Sem {
 
   MapBuilder::~MapBuilder(){
     saveConfig();
+    for(std::vector<Tile*>::iterator it = map_tiles_.begin(); it != map_tiles_.end(); ++it){
+      delete (*it);
+    }
   }
 
 
