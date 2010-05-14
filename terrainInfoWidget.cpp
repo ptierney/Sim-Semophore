@@ -20,8 +20,10 @@ namespace Sem {
       return;
 
     layout_ = new QVBoxLayout();
+    layout_->addWidget(info_box_->arrondissement_);
     layout_->addWidget(info_box_->cost_);
     layout_->addWidget(info_box_->elevation_);
+    layout_->addWidget(info_box_->coordinates_);
 
     setLayout(layout_);
   }

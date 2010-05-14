@@ -18,6 +18,7 @@ namespace Sem {
     terrain_box_ = new QComboBox(this);
     terrain_box_->addItem(tr("plane"), TileImageLoader::PLANE);
     terrain_box_->addItem(tr("grass"), TileImageLoader::GRASSLAND);
+    terrain_box_->addItem(tr("sea"), TileImageLoader::SEA);
     terrain_box_->addItem(tr("ignore"), -1);
 
     covering_terrain_box_ = new QComboBox(this);
@@ -104,7 +105,8 @@ namespace Sem {
         tile->set_covering_object(image, cov_object_type, index1, index2);
     }
 
-    tile->set_arrondissement(arrondissement_->text());
+    if(!arrondissement_->text().toStdString().empty())
+      tile->set_arrondissement(arrondissement_->text());
     if(show_text_->checkState() == Qt::Checked)
       tile->set_show_text(true);
     else

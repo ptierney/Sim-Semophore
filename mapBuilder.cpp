@@ -59,31 +59,87 @@ namespace Sem {
     int parse;
     int x_pos;
 
+    bool hit_sea;
+
 
     for(int y = 0; y < num_tiles_y_; ++y){
+      hit_sea = false;
       for(int x = 0; x < num_tiles_x_; ++x){
+        //std::cerr << x << " : " << y << std::endl;
+
         tile = new Tile(d_);
         tile->init();
 
         line = stream.readLine();
         list = line.split(tr(","));
 
+        /*
+        if( list.length() < 11){
+          foreach(QString str, list){
+            std::cerr << str.toStdString() << std::endl;
+          }
+        }
+        */
+
         parse = list[0].toInt();
+        index1 = list[1].toInt();
+        index2 = list[2].toInt();
 
         switch(parse){
         case 1:
           type = TileImageLoader::GRASSLAND;
+          if(false && hit_sea == false){
+            type = TileImageLoader::SEA;
+            index1 = 0;
+            index2 = 0;
+          }
           break;
         case 2:
           type = TileImageLoader::PLANE;
+          break;
+        case 3:
+          type = TileImageLoader::SEA;
+          hit_sea = true;
           break;
         default:
           type = TileImageLoader::PLANE;
           break;
         }
 
-        index1 = list[1].toInt();
-        index2 = list[2].toInt();
+        /*
+        if(x >= 42 && x <= 58 &&
+           y >= 127 && y <= 182){
+          type = TileImageLoader::SEA;
+          index1 = 0;
+          index2 = 0;
+        }
+
+        if(x >= 58 && x <= 76 &&
+           y >= 127 && y <= 158){
+          type = TileImageLoader::SEA;
+          index1 = 0;
+          index2 = 0;
+        }
+
+
+        if( x >= 207 && x <= 236 &&
+            y >=485 && y <= 499){
+          type = TileImageLoader::SEA;
+          index1 = 0;
+          index2 = 0;
+
+        }
+
+        if( x >= 222 && x <= 240 &&
+            y >= 476 && y <= 486){
+          type = TileImageLoader::SEA;
+          index1 = 0;
+          index2 = 0;
+        }
+        */
+
+
+
         temp_image = d_->tile_image_loader()->loadImage(type, index1, index2);
         tile->set_axon_image(temp_image, type, index1, index2);
 
@@ -108,6 +164,12 @@ namespace Sem {
           type = TileImageLoader::NONE;
           break;
         }
+/*
+        if( x >= 203 && x <= 226 &&
+            y >= 398 && y <= 469){
+          type = TileImageLoader::NONE;
+        }
+        */
 
         if(type != TileImageLoader::NONE){
           index1 = list[4].toInt();
@@ -145,12 +207,20 @@ namespace Sem {
           tile->set_covering_object(temp_image, type, index1, index2);
         }
 
+        tile->set_arrondissement(list[9]);
+        bool show_text;
+        if(list[10].toInt() == 1)
+          show_text = true;
+        else
+          show_text = false;
+
         x_pos = x * x_spacing;
         if(y % 2 == 0)
            x_pos -= x_spacing / 2;
         tile->setPos(x_pos, y * y_spacing);
         tile->set_x_index(x);
         tile->set_y_index(y);
+        tile->set_show_text(show_text); // Needs to go after pos has been set
         d_->game_scene()->addItem(tile);
         map_tiles_.push_back(tile);
       }
@@ -187,6 +257,9 @@ namespace Sem {
         case TileImageLoader::PLANE:
           stream << "2,";
           break;
+        case TileImageLoader::SEA:
+          stream << "3,";
+          break;
         default:
           stream << "0,";
           std::cerr << "ERROR saving config" << std::endl;
@@ -213,7 +286,7 @@ namespace Sem {
           stream << "3,";
           break;
         case TileImageLoader::SWAMP:
-          stream << "4 ";
+          stream << "4,";
           break;
         case TileImageLoader::RIVER:
           stream << "5,";

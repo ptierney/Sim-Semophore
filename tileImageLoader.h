@@ -29,6 +29,7 @@ public:
     RAILROAD,
     RIVER,
     SWAMP,
+    SEA,
     SEMAPHORE,
     SELECT
   };
@@ -61,6 +62,7 @@ private:
   QImage swamp_image_;
   QImage select_image_;
   QImage river_image_;
+  QImage sea_image_;
   QImage semaphore_image_;
 
   std::map<TileType, std::map<int, std::map<int, QImage> > > image_cache_;

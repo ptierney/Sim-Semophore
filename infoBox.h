@@ -40,6 +40,8 @@ namespace Sem {
 
     QLabel* cost_;
     QLabel* elevation_;
+    QLabel* arrondissement_;
+    QLabel* coordinates_;
 
     QLabel* engineers_;
     QLabel* engineer_1_;

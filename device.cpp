@@ -31,6 +31,7 @@ namespace Sem {
     map_builder_ = new MapBuilder(this);
     map_builder_->init(); // loads config, builds map
     //map_builder_->buildMap();
+    createLabels();
     tower_creator_ = new TowerCreator(this);
     tower_creator_->init();
 
@@ -114,6 +115,16 @@ namespace Sem {
 
   TowerCreator* Device::tower_creator(){
     return tower_creator_;
+  }
+
+  std::vector<QGraphicsTextItem*>& Device::labels(){
+    return labels_;
+  }
+
+  void Device::createLabels(){
+    for(std::vector<QGraphicsTextItem*>::const_iterator it = labels_.begin(); it != labels_.end(); ++it){
+      game_scene_->addItem(*it);
+    }
   }
 
 }

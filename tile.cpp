@@ -69,7 +69,8 @@ namespace Sem {
     //painter->drawPath(clip_path_);
     //painter->drawRect(draw_rect_);
 
-    if(terrain_covering_) {
+    if(terrain_covering_ &&
+       covering_terrain_type_ != TileImageLoader::NONE) {
       int terrain_covering_height = -height_;
       if(covering_terrain_type_ == TileImageLoader::FOREST ||
          covering_terrain_type_ == TileImageLoader::MOUNTAIN)
@@ -80,7 +81,8 @@ namespace Sem {
                          covering_terrain_);
     }
 
-    if(object_covering_){
+    if(object_covering_ &&
+       covering_object_type_ != TileImageLoader::NONE){
       painter->drawImage(QPoint(-width_/2.0,
                                 -height_),
                          covering_object_);
@@ -96,12 +98,6 @@ namespace Sem {
                          selected_icon_);
     }
 
-    /*
-    if(selected_ || show_text_){
-      painter->drawText(QPointF(width_/2.0, -height_/2.0),
-                        arrondissement_);
-    }
-    */
   }
 
   void Tile::set_axon_image(const QImage& image, TileImageLoader::TileType type, int x, int y){
@@ -157,7 +153,7 @@ namespace Sem {
   }
 
   void Tile::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/){
-    //d_->map_changer()->objectSelected(this);
+    d_->map_changer()->objectSelected(this);
     d_->info_box()->registerSelect(this);
     d_->tower_creator()->registerClick(this);
 
@@ -308,10 +304,12 @@ namespace Sem {
       QGraphicsTextItem* text_object = new QGraphicsTextItem();
       text_object->setDefaultTextColor(Qt::white);
       text_object->setPlainText(arrondissement_);
+      text_object->scale(2.0, 2.0);
       text_object->setPos(QPointF(pos().x() + width_/ 4.0,
                                   pos().y() - height_/2.0 -
                                   text_object->boundingRect().height()/2.0));
-      d_->game_scene()->addItem(text_object);
+      d_->labels().push_back(text_object);
+      //d_->game_scene()->addItem(text_object);
     }
   }
 

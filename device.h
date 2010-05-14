@@ -1,11 +1,14 @@
 #ifndef DEVICE_H
 #define DEVICE_H
 
+#include <vector>
+
 #include <QObject>
 
 QT_BEGIN_NAMESPACE
 class QApplication;
 class QMainWindow;
+class QGraphicsTextItem;
 QT_END_NAMESPACE
 
 namespace Sem {
@@ -35,6 +38,8 @@ namespace Sem {
     InfoBox* info_box();
     TowerCreator* tower_creator();
 
+    std::vector<QGraphicsTextItem*>& labels();
+
   private:
     QMainWindow* main_window_;
 
@@ -49,10 +54,13 @@ namespace Sem {
     InfoBox* info_box_;
     TowerCreator* tower_creator_;
 
+    std::vector<QGraphicsTextItem*> labels_;
+
     void createMapChanger();
     void createMiniMap();
     void createDateBox();
     void createInfoBox();
+    void createLabels();
   };
 
 }

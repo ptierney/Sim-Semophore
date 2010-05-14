@@ -22,6 +22,8 @@ namespace Sem {
   void InfoBox::init(){
     cost_ = new QLabel();
     elevation_ = new QLabel();
+    arrondissement_ = new QLabel();
+    coordinates_ = new QLabel();
     engineers_ = new QLabel();
     engineer_1_ = new QLabel();
     engineer_2_ = new QLabel();
@@ -135,6 +137,8 @@ namespace Sem {
   }
 
   void InfoBox::updateTerrainValues(Tile* tile){
+    arrondissement_->setText(tile->arrondissement());
+
     QString cost;
     cost.setNum(tile->cost());
     cost_->setText(tr("Cost: Fr. ") + cost);
@@ -142,6 +146,11 @@ namespace Sem {
     QString elevation;
     elevation.setNum(tile->elevation());
     elevation_->setText(tr("Elevation: ") + elevation);
+
+    QString x, y;
+    x.setNum(tile->x_index());
+    y.setNum(tile->y_index());
+    coordinates_->setText(x + tr(" : ") + y);
   }
 
   void InfoBox::updateTowerValues(Tower* tower){

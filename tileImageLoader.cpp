@@ -30,6 +30,7 @@ namespace Sem {
     swamp_image_.load("media/swamps.png");
     select_image_.load("media/select-alpha.png");
     river_image_.load("media/rivers.png");
+    sea_image_.load("media/s.png");
     semaphore_image_.load("media/semaphore.png");
   }
 
@@ -97,6 +98,10 @@ namespace Sem {
     case SEMAPHORE:
       temp_image = &semaphore_image_;
       image_height = LARGE_TILE_HEIGHT;
+      break;
+    case SEA:
+      temp_image = &sea_image_;
+      image_height = TILE_HEIGHT;
       break;
     default:
       return city_image_;
