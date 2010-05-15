@@ -162,12 +162,12 @@ namespace Sem {
     if(tower->tower_1()){
       tower_1_->setText(tower->tower_1()->name());
     } else {
-      tower_1_->setText(tr("Fin"));
+      tower_1_->setText(tr("Aucun"));
     }
     if(tower->tower_2()){
       tower_2_->setText(tower->tower_2()->name());
     } else {
-      tower_2_->setText(tr("Fin"));
+      tower_2_->setText(tr("Aucun"));
     }
     operating_since_->setText(tr("Operating since:") +
                               tower->date_created().toString("dddd MMMM d, yyyy"));

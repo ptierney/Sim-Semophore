@@ -36,8 +36,6 @@ namespace Sem {
     show_text_ = false;
     selected_ = false;
     ghosted_tower_ = false;
-
-    ellipse_color_ = QColor(255, 0, 255, 100);
   }
 
   void Tile::init(){

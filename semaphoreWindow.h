@@ -17,6 +17,7 @@ public:
 
   public slots:
     void buildSemaphore();
+    void cancelBuilding();
 
 protected:
     void changeEvent(QEvent *e);
@@ -27,6 +28,7 @@ private:
 
     QMenu* build_menu_;
     QAction* build_semaphore_;
+    QAction* cancel_building_;
 
     void createMenus();
     void createActions();

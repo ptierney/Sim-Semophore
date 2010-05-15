@@ -4,6 +4,9 @@
 #include <vector>
 
 #include <QObject>
+#include <QGraphicsSceneMouseEvent>
+
+#include <tower.h>
 
 namespace Sem {
   class Device;
@@ -19,7 +22,14 @@ namespace Sem {
     void registerClick(Tile*);
 
     void build(); // Called by the main window
+    void cancelBuilding();
     std::vector<Tower*>& towers();
+
+    Tile* last_hover_tile();
+
+    void mousePressEvent(Tower* sending_tower, QGraphicsSceneMouseEvent* event);
+
+    void beginSettingConnection(Tower*, Tower::Connection);
 
   private:
     Device* d_;
@@ -29,6 +39,8 @@ namespace Sem {
     Tile* last_click_tile_;
 
     Tower* active_tower_;
+    Tower* set_connection_tower_;
+    Tower::Connection set_connection_type_;
     std::vector<Tower*> towers_;
 
   };

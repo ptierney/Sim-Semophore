@@ -1,4 +1,6 @@
 
+#include <iostream>
+
 #include <QGraphicsObject>
 #include <QPainter>
 
@@ -6,6 +8,8 @@
 #include <engineer.h>
 #include <tile.h>
 #include <device.h>
+#include <infoBox.h>
+#include <towerCreator.h>
 
 namespace Sem {
 
@@ -22,6 +26,10 @@ namespace Sem {
     height_ = 64;
     tile_width_ = 128;
     tile_height_ = 64;
+    ellipse_color_ = QColor(0, 121, 144, 75);
+    ellipse_boarder_color_ = QColor(255, 255, 255, 150);
+    set_connection_color_ = QColor(255, 0, 0, 150);
+    true_center_ = QPointF(0, -height_/2);
   }
 
   void Tower::init(){
@@ -72,11 +80,19 @@ namespace Sem {
 
   void Tower::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*option*/, QWidget* /*widget*/){
     if(view_mode_ == RANGE){
-      painter->setPen(QPen(QBrush(Qt::white), 0.45));
-      painter->drawEllipse(QPointF(0, -height_/2), range_, range_/2.0);
+      painter->setBrush(QBrush(ellipse_color_));
+      painter->setPen(QPen(QBrush(ellipse_boarder_color_), 3.5));
+      painter->drawEllipse(true_center_, range_, range_/2.0);
     }
 
     drawTower(painter);
+
+    if(view_mode_ == SET_CONNECTION){
+      painter->setPen(QPen(QBrush(set_connection_color_), 5, Qt::DashLine));
+      QPointF terminate = d_->tower_creator()->last_hover_tile()->pos();
+      terminate = QPointF(terminate.x(), terminate.y() - 32) - pos();
+      painter->drawLine(true_center_, terminate);
+    }
   }
 
   void Tower::drawTower(QPainter* painter){
@@ -121,20 +137,49 @@ namespace Sem {
   }
 
   void Tower::hoverEnterEvent(QGraphicsSceneHoverEvent* /*event*/){
+    if(view_mode_ == SET_CONNECTION)
+      return;
+
     view_mode_ = RANGE;
+    // Update the info box
   }
 
   void Tower::hoverLeaveEvent(QGraphicsSceneHoverEvent* /*event*/){
+    if(view_mode_ == SET_CONNECTION)
+      return;
+
       view_mode_ = NORMAL;
   }
 
-  void Tower::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/){
+  void Tower::mousePressEvent(QGraphicsSceneMouseEvent* event){
+    d_->tower_creator()->mousePressEvent(this, event);
+
+    if(view_mode_ == SET_CONNECTION)
+      return;
+
     view_mode_ = CONNECTIONS;
   }
 
   // Logic for range: at 0 you get 6, plus a max of 4 for
   // hills, cities, etc.
   int Tower::getRangeFromElevation(int elevation){
-    return 6 * tile_width_ + elevation / 500.0 * tile_width_;
+    return 4 * tile_width_ + elevation / 500.0 * tile_width_;
   }
+
+  void Tower::beginSettingTower(Connection type){
+    current_connection_set_ = type;
+    view_mode_ = SET_CONNECTION;
+  }
+
+  void Tower::setConnectingTower(Tower* tower, Connection connection){
+    if(connection == TOWER_1)
+      tower_1_ = tower;
+    else if(connection == TOWER_2)
+      tower_2_ = tower;
+    else
+      std::cerr << "Oh fuck" << std::endl;
+
+    view_mode_ = NORMAL;
+  }
+
 }

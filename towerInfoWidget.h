@@ -17,12 +17,19 @@ namespace Sem {
 
     void createLayout();
 
+  public slots:
+    void setTower1();
+    void setTower2();
+
   private:
     Device* d_;
     InfoBox* info_box_;
     int spacing_;
 
     QVBoxLayout* layout_;
+
+    QPushButton* set_tower_1_;
+    QPushButton* set_tower_2_;
   };
 }
 

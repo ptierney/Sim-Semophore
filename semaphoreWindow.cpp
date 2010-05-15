@@ -38,14 +38,21 @@ void SemaphoreWindow::buildSemaphore(){
   d_->tower_creator()->build();
 }
 
+void SemaphoreWindow::cancelBuilding(){
+  d_->tower_creator()->cancelBuilding();
+}
+
 void SemaphoreWindow::createActions(){
-  build_semaphore_ = new QAction(tr("Build Semaphore..."), this);
+  build_semaphore_ = new QAction(tr("Build semaphore..."), this);
   connect(build_semaphore_, SIGNAL(triggered()),
           this, SLOT(buildSemaphore()));
-
+  cancel_building_ = new QAction(tr("Cancel building semaphore"), this);
+  connect(cancel_building_, SIGNAL(triggered()),
+          this, SLOT(cancelBuilding()));
 }
 
 void SemaphoreWindow::createMenus() {
   build_menu_ = menuBar()->addMenu(tr("Build"));
   build_menu_->addAction(build_semaphore_);
+  build_menu_->addAction(cancel_building_);
 }

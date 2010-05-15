@@ -27,7 +27,7 @@ namespace Sem {
   }
 
   MapBuilder::~MapBuilder(){
-    saveConfig();
+    //saveConfig();
     for(std::vector<Tile*>::iterator it = map_tiles_.begin(); it != map_tiles_.end(); ++it){
       delete (*it);
     }

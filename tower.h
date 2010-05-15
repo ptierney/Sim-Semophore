@@ -21,7 +21,13 @@ namespace Sem {
       HIDDEN,
       NORMAL,
       RANGE,
-      CONNECTIONS
+      CONNECTIONS,
+      SET_CONNECTION
+    };
+
+    enum Connection {
+      TOWER_1,
+      TOWER_2
     };
 
     void set_tile(Tile*);
@@ -41,6 +47,9 @@ namespace Sem {
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void updateDrawRect();
+
+    void beginSettingTower(Connection);
+    void setConnectingTower(Tower*, Connection);
 
     void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
@@ -74,6 +83,12 @@ namespace Sem {
     int height_;
     int tile_width_;
     int tile_height_;
+    QPointF true_center_;
+    QColor ellipse_color_;
+    QColor ellipse_boarder_color_;
+    QColor set_connection_color_;
+
+    Connection current_connection_set_;
 
     void drawTower(QPainter*);
     int getRangeFromElevation(int);

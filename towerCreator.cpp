@@ -4,6 +4,7 @@
 #include <tower.h>
 #include <device.h>
 #include <gameScene.h>
+#include <infoBox.h>
 
 namespace Sem {
 
@@ -12,6 +13,7 @@ namespace Sem {
     active_ = false;
     last_hover_tile_ = NULL;
     last_click_tile_ = NULL;
+    set_connection_tower_ = NULL;
   }
 
   void TowerCreator::init(){
@@ -28,6 +30,15 @@ namespace Sem {
     d_->game_scene()->addItem(active_tower_);
   }
 
+  void TowerCreator::cancelBuilding(){
+    active_ = false;
+    if(active_tower_){
+      delete active_tower_;
+      active_tower_ = NULL;
+    }
+    towers_.pop_back();
+  }
+
   void TowerCreator::registerEnter(Tile* tile){
     if(!active_) {
       last_hover_tile_ = tile;
@@ -38,6 +49,8 @@ namespace Sem {
     active_tower_->update();
 
     last_hover_tile_ = tile;
+
+    d_->info_box()->registerSelect(tile);
   }
 
   void TowerCreator::registerClick(Tile* tile){
@@ -56,4 +69,23 @@ namespace Sem {
   std::vector<Tower*>& TowerCreator::towers(){
     return towers_;
   }
+
+  Tile* TowerCreator::last_hover_tile(){
+    return last_hover_tile_;
+  }
+
+  void TowerCreator::mousePressEvent(Tower* sending_tower, QGraphicsSceneMouseEvent* event){
+    if(set_connection_tower_ && set_connection_tower_ != sending_tower){
+      set_connection_tower_->setConnectingTower(sending_tower,
+                                                set_connection_type_);
+      set_connection_tower_ = NULL;
+    }
+  }
+
+  void TowerCreator::beginSettingConnection(Tower* tower, Tower::Connection setting_type){
+    set_connection_tower_ = tower;
+    set_connection_type_ = setting_type;
+    tower->beginSettingTower(setting_type);
+  }
+
 }

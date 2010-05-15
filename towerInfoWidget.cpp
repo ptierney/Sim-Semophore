@@ -1,6 +1,9 @@
 
 #include <towerInfoWidget.h>
 #include <infoBox.h>
+#include <device.h>
+#include <towerCreator.h>
+#include <tile.h>
 
 namespace Sem {
 
@@ -12,7 +15,23 @@ namespace Sem {
   }
 
   void TowerInfoWidget::init(){
+    set_tower_1_ = new QPushButton(tr("Set connecting tower #1"));
+    set_tower_2_ = new QPushButton(tr("Set connecting tower #2"));
+
+    connect(set_tower_1_, SIGNAL(pressed()),
+            this, SLOT(setTower1()));
+    connect(set_tower_2_, SIGNAL(pressed()),
+            this, SLOT(setTower2()));
+
     createLayout();
+  }
+
+  void TowerInfoWidget::setTower1(){
+    d_->tower_creator()->beginSettingConnection(info_box_->last_tile_->tower(), Tower::TOWER_1);
+  }
+
+  void TowerInfoWidget::setTower2(){
+    d_->tower_creator()->beginSettingConnection(info_box_->last_tile_->tower(), Tower::TOWER_2);
   }
 
   void TowerInfoWidget::createLayout(){
@@ -30,7 +49,9 @@ namespace Sem {
     layout_->addSpacing(spacing_);
     layout_->addWidget(info_box_->towers_);
     layout_->addWidget(info_box_->tower_1_);
+    layout_->addWidget(set_tower_1_);
     layout_->addWidget(info_box_->tower_2_);
+    layout_->addWidget(set_tower_2_);
     layout_->addSpacing(spacing_);
     layout_->addWidget(info_box_->operating_since_);
     layout_->addSpacing(spacing_);
