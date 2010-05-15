@@ -185,6 +185,11 @@ namespace Sem {
           break;
         case 2:
           type = TileImageLoader::FARMLAND;
+          /*
+          temp_image = d_->tile_image_loader()->loadImage(TileImageLoader::PLANE,
+                                                          2, 14);
+          tile->set_axon_image(temp_image, TileImageLoader::PLANE, 2, 14);
+          */
           break;
         case 3:
           type = TileImageLoader::IRRIGATION;
@@ -382,6 +387,10 @@ namespace Sem {
 
   int MapBuilder::num_tiles_y(){
     return num_tiles_y_;
+  }
+
+  std::vector<Tile*>& MapBuilder::map_tiles(){
+    return map_tiles_;
   }
 
 }

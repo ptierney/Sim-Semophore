@@ -35,6 +35,12 @@ namespace Sem {
 
     QLineEdit* arrondissement_;
     QCheckBox* show_text_;
+    QCheckBox* expand_name_;
+
+    QLineEdit* x_spread_;
+    QLineEdit* y_spread_;
+
+    void changeTile(Tile*, bool);
   };
 
 

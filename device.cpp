@@ -127,4 +127,8 @@ namespace Sem {
     }
   }
 
+  MapBuilder* Device::map_builder(){
+    return map_builder_;
+  }
+
 }

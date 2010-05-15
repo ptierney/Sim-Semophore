@@ -37,6 +37,7 @@ namespace Sem {
     GameState* game_state();
     InfoBox* info_box();
     TowerCreator* tower_creator();
+    MapBuilder* map_builder();
 
     std::vector<QGraphicsTextItem*>& labels();
 

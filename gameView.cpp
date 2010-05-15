@@ -2,12 +2,15 @@
 #include <math.h>
 
 #include <iostream>
+#include <vector>
 
 #include <QGLWidget>
 #include <QWheelEvent>
+#include <QGraphicsTextItem>
 
 #include <gameView.h>
 #include <gameScene.h>
+#include <device.h>
 
 namespace Sem {
   GameView::GameView(Device* d, GameScene* scene) :

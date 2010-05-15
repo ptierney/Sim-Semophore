@@ -30,6 +30,8 @@ namespace Sem {
     int num_tiles_x();
     int num_tiles_y();
 
+    std::vector<Tile*>& map_tiles();
+
   private:
     Device* d_;
     MapChanger* map_changer_;
