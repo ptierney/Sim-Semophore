@@ -54,13 +54,13 @@ namespace Sem {
   }
 
   void Device::createMapChanger(){
-    QDockWidget* dock = new QDockWidget(tr("Map Changer"), main_window_);
-    dock->setFloating(1);
-    map_changer_ = new MapChanger(this, dock);
+    //QDockWidget* dock = new QDockWidget(tr("Map Changer"), main_window_);
+    //dock->setFloating(1);
+    map_changer_ = new MapChanger(this);//, dock);
     map_changer_->init();
-    dock->setWidget(map_changer_);
-    dock->setAllowedAreas(Qt::NoDockWidgetArea);
-    main_window_->addDockWidget(Qt::LeftDockWidgetArea, dock);
+    //dock->setWidget(map_changer_);
+    //dock->setAllowedAreas(Qt::NoDockWidgetArea);
+    //main_window_->addDockWidget(Qt::LeftDockWidgetArea, dock);
   }
 
   void Device::createMiniMap(){

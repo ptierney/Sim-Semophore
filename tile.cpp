@@ -36,6 +36,8 @@ namespace Sem {
     show_text_ = false;
     selected_ = false;
     ghosted_tower_ = false;
+
+    ellipse_color_ = QColor(255, 0, 255, 100);
   }
 
   void Tile::init(){
@@ -86,10 +88,6 @@ namespace Sem {
       painter->drawImage(QPoint(-width_/2.0,
                                 -height_),
                          covering_object_);
-    }
-
-    if(tower_ || ghosted_tower_){
-      drawTower(painter);
     }
 
     if(selected_){
@@ -152,16 +150,31 @@ namespace Sem {
     clip_path_.addPolygon(diamond);
   }
 
-  void Tile::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/){
-    d_->map_changer()->objectSelected(this);
+  void Tile::mousePressEvent(QGraphicsSceneMouseEvent* event){
+    //d_->map_changer()->objectSelected(this);
     d_->info_box()->registerSelect(this);
     d_->tower_creator()->registerClick(this);
 
+    if(tower_)
+      tower_->mousePressEvent(event);
+
     update();
+    QGraphicsObject::mousePressEvent(event);
   }
 
-  void Tile::hoverEnterEvent(QGraphicsSceneHoverEvent* /*event*/){
+  void Tile::hoverEnterEvent(QGraphicsSceneHoverEvent* event){
     d_->tower_creator()->registerEnter(this);
+    if(tower_)
+      tower_->hoverEnterEvent(event);
+
+    QGraphicsObject::hoverEnterEvent(event);
+  }
+
+  void Tile::hoverLeaveEvent(QGraphicsSceneHoverEvent* event){
+    if(tower_)
+      tower_->hoverLeaveEvent(event);
+
+    QGraphicsObject::hoverLeaveEvent(event);
   }
 
   TileImageLoader::TileType Tile::terrain_type(){
@@ -248,12 +261,6 @@ namespace Sem {
     return elevation_;
   }
 
-  void Tile::drawTower(QPainter* painter){
-    painter->drawImage(QPoint(-width_/2.0,
-                              -height_ - 24),
-                       tower_object_);
-
-  }
 
   void Tile::set_ghosted_tower(bool ghosted){
     ghosted_tower_ = ghosted;
@@ -315,6 +322,13 @@ namespace Sem {
 
   bool Tile::arrondissement_set(){
     return arrondissement_set_;
+  }
+
+  int Tile::getPlacementElevation(){
+    if(covering_object_type_ == TileImageLoader::CITY)
+      return elevation_ + 150;
+    else
+      return elevation_;
   }
 
 }

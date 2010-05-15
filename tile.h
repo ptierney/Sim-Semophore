@@ -38,6 +38,7 @@ namespace Sem {
 
     int cost();
     int elevation();
+    int getPlacementElevation(); // Takes into account cities
     const QString& arrondissement();
     void set_arrondissement(const QString&);
     bool arrondissement_set();
@@ -58,6 +59,7 @@ namespace Sem {
   protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
   private:
     Device* d_;
@@ -79,6 +81,7 @@ namespace Sem {
 
     QImage tower_object_;
     bool ghosted_tower_;
+    QColor ellipse_color_;
 
     int elevation_;
     Tower* tower_;
@@ -94,7 +97,7 @@ namespace Sem {
     int x_index_;
     int y_index_;
 
-    void drawTower(QPainter*);
+
   };
 
 }

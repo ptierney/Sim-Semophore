@@ -2,6 +2,7 @@
 #define TOWER_H
 
 #include <QObject>
+#include <QGraphicsObject>
 #include <QDate>
 
 namespace Sem {
@@ -9,14 +10,21 @@ namespace Sem {
   class Tile;
   class Engineer;
 
-  class Tower : public QObject {
+  class Tower : public QGraphicsObject {
     Q_OBJECT
 
   public:
     Tower(Device*, Tile*);
     void init();
 
-    void update();
+    enum ViewMode {
+      HIDDEN,
+      NORMAL,
+      RANGE,
+      CONNECTIONS
+    };
+
+    void set_tile(Tile*);
 
     const QDate& date_created();
     const QString& name();
@@ -25,8 +33,18 @@ namespace Sem {
     Tower* tower_1();
     Tower* tower_2();
 
+    ViewMode view_mode();
+    void set_view_mode(ViewMode);
     float operating_percentage();
     float message_rate();
+
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void updateDrawRect();
+
+    void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
   private:
     Device* d_;
@@ -46,6 +64,19 @@ namespace Sem {
 
     float operating_percentage_;
     float message_rate_;
+
+    float range_;
+
+    ViewMode view_mode_;
+    QRectF draw_rect_;
+    QImage tower_image_;
+    int width_;
+    int height_;
+    int tile_width_;
+    int tile_height_;
+
+    void drawTower(QPainter*);
+    int getRangeFromElevation(int);
   };
 
 }

@@ -2,6 +2,8 @@
 #include <towerCreator.h>
 #include <tile.h>
 #include <tower.h>
+#include <device.h>
+#include <gameScene.h>
 
 namespace Sem {
 
@@ -19,6 +21,11 @@ namespace Sem {
   void TowerCreator::build(){
     active_ = true;
 
+    active_tower_ = new Tower(d_, last_hover_tile_);
+    active_tower_->init();
+    active_tower_->set_view_mode(Tower::RANGE);
+    towers_.push_back(active_tower_);
+    d_->game_scene()->addItem(active_tower_);
   }
 
   void TowerCreator::registerEnter(Tile* tile){
@@ -27,10 +34,9 @@ namespace Sem {
       return;
     }
 
-    if(last_hover_tile_)
-      last_hover_tile_->set_ghosted_tower(false);
+    active_tower_->set_tile(tile);
+    active_tower_->update();
 
-    tile->set_ghosted_tower(true);
     last_hover_tile_ = tile;
   }
 
@@ -41,13 +47,13 @@ namespace Sem {
     }
 
     active_ = false;
-    last_hover_tile_->set_ghosted_tower(false);
-    tile->set_ghosted_tower(false);
-    Tower* tower = new Tower(d_, tile);
-    tower->init();
-    tile->set_tower(tower);
-    // Make a new tower, place it
+
+    active_tower_->set_view_mode(Tower::NORMAL);
+    active_tower_->update();
+    tile->set_tower(active_tower_);
   }
 
-
+  std::vector<Tower*>& TowerCreator::towers(){
+    return towers_;
+  }
 }
