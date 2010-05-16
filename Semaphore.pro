@@ -21,7 +21,9 @@ SOURCES += main.cpp \
     engineer.cpp \
     towerCreator.cpp \
     terrainInfoWidget.cpp \
-    towerInfoWidget.cpp
+    towerInfoWidget.cpp \
+    newTowerDialog.cpp \
+    newTowerDialogCreator.cpp
 HEADERS += semaphoreWindow.h \
     tileImageLoader.h \
     gameScene.h \
@@ -38,5 +40,7 @@ HEADERS += semaphoreWindow.h \
     engineer.h \
     towerCreator.h \
     terrainInfoWidget.h \
-    towerInfoWidget.h
+    towerInfoWidget.h \
+    newTowerDialog.h \
+    newTowerDialogCreator.h
 FORMS += semaphoreWindow.ui

@@ -1,10 +1,15 @@
 
+#include <iostream>
+
 #include <towerCreator.h>
 #include <tile.h>
 #include <tower.h>
 #include <device.h>
 #include <gameScene.h>
 #include <infoBox.h>
+#include <newTowerDialogCreator.h>
+#include <gameState.h>
+#include <dateBox.h>
 
 namespace Sem {
 
@@ -21,6 +26,9 @@ namespace Sem {
   }
 
   void TowerCreator::build(){
+    if(last_hover_tile_ == NULL)
+      return;
+
     active_ = true;
 
     active_tower_ = new Tower(d_, last_hover_tile_);
@@ -64,6 +72,12 @@ namespace Sem {
     active_tower_->set_view_mode(Tower::NORMAL);
     active_tower_->update();
     tile->set_tower(active_tower_);
+
+    d_->game_state()->addMoney(tile->cost() * -1);
+    d_->date_box()->updateLabels();
+    d_->date_box()->update();
+
+    d_->new_tower_dialog_creator()->create(active_tower_);
   }
 
   std::vector<Tower*>& TowerCreator::towers(){
@@ -78,6 +92,16 @@ namespace Sem {
     if(set_connection_tower_ && set_connection_tower_ != sending_tower){
       set_connection_tower_->setConnectingTower(sending_tower,
                                                 set_connection_type_);
+      Tower::Connection other_type;
+      if(set_connection_type_ == Tower::TOWER_1)
+        other_type = Tower::TOWER_2;
+      else if(set_connection_type_ == Tower::TOWER_2)
+        other_type = Tower::TOWER_1;
+      else
+        std::cerr<< "Oh fuck" << std::endl;
+
+      sending_tower->setConnectingTower(set_connection_tower_, other_type);
+
       set_connection_tower_ = NULL;
     }
   }
@@ -86,6 +110,10 @@ namespace Sem {
     set_connection_tower_ = tower;
     set_connection_type_ = setting_type;
     tower->beginSettingTower(setting_type);
+  }
+
+  void TowerCreator::changeGlobally(){
+
   }
 
 }

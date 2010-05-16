@@ -10,6 +10,7 @@
 #include <device.h>
 #include <infoBox.h>
 #include <towerCreator.h>
+#include <gameState.h>
 
 namespace Sem {
 
@@ -29,6 +30,8 @@ namespace Sem {
     ellipse_color_ = QColor(0, 121, 144, 75);
     ellipse_boarder_color_ = QColor(255, 255, 255, 150);
     set_connection_color_ = QColor(255, 0, 0, 150);
+    connection_color_ = QColor(255, 255, 0, 200);
+    connection_line_width_ = 3;
     true_center_ = QPointF(0, -height_/2);
   }
 
@@ -37,6 +40,8 @@ namespace Sem {
     engineer_2_ = new Engineer(d_, this);
 
     tower_image_ = d_->tile_image_loader()->loadImage(TileImageLoader::SEMAPHORE, 0, 0);
+
+    date_created_ = d_->game_state()->current_date();
 
     set_tile(tile_);
   }
@@ -85,7 +90,7 @@ namespace Sem {
       painter->drawEllipse(true_center_, range_, range_/2.0);
     }
 
-    drawTower(painter);
+
 
     if(view_mode_ == SET_CONNECTION){
       painter->setPen(QPen(QBrush(set_connection_color_), 5, Qt::DashLine));
@@ -93,6 +98,23 @@ namespace Sem {
       terminate = QPointF(terminate.x(), terminate.y() - 32) - pos();
       painter->drawLine(true_center_, terminate);
     }
+
+    if(view_mode_ == CONNECTIONS){
+      painter->setPen(QPen(QBrush(connection_color_),
+                           connection_line_width_,
+                           Qt::DotLine));
+      if(tower_1_){
+        QPointF other_pos = tower_1_->getTrueCenter() - pos();
+        painter->drawLine(true_center_, other_pos);
+      }
+
+      if(tower_2_){
+        QPointF other_pos = tower_2_->getTrueCenter() - pos();
+        painter->drawLine(true_center_, other_pos);
+      }
+    }
+
+    drawTower(painter);
   }
 
   void Tower::drawTower(QPainter* painter){
@@ -180,6 +202,14 @@ namespace Sem {
       std::cerr << "Oh fuck" << std::endl;
 
     view_mode_ = NORMAL;
+  }
+
+  QPointF Tower::getTrueCenter(){
+    return pos() + true_center_;
+  }
+
+  Tile* Tower::tile(){
+    return tile_;
   }
 
 }

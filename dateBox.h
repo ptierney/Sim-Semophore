@@ -21,6 +21,7 @@ namespace Sem {
   private:
     Device* d_;
     QLabel* current_date_;
+    QLabel* end_date_;
     QLabel* remaining_time_;
     QLabel* money_;
     QLabel* title_;

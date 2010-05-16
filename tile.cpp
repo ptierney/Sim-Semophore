@@ -325,8 +325,11 @@ namespace Sem {
   int Tile::getPlacementElevation(){
     if(covering_object_type_ == TileImageLoader::CITY)
       return elevation_ + 150;
+    else if(covering_terrain_type_ == TileImageLoader::FOREST)
+      return elevation_ - 450;
     else
       return elevation_;
   }
+
 
 }

@@ -12,6 +12,7 @@
 #include <dateBox.h>
 #include <infoBox.h>
 #include <towerCreator.h>
+#include <newTowerDialogCreator.h>
 
 namespace Sem {
 
@@ -34,6 +35,8 @@ namespace Sem {
     createLabels();
     tower_creator_ = new TowerCreator(this);
     tower_creator_->init();
+    new_tower_dialog_creator_ = new NewTowerDialogCreator(this);
+    new_tower_dialog_creator_->init();
 
     game_view_ = new GameView(this, game_scene_);
     game_view_->init();
@@ -42,6 +45,7 @@ namespace Sem {
     createMapChanger();
 
     game_state_ = new GameState(this);
+    game_state_->init();
 
     //createMiniMap();
     createDateBox();
@@ -101,6 +105,10 @@ namespace Sem {
     return game_scene_;
   }
 
+  GameView* Device::game_view(){
+    return game_view_;
+  }
+
   MapChanger* Device::map_changer(){
     return map_changer_;
   }
@@ -129,6 +137,18 @@ namespace Sem {
 
   MapBuilder* Device::map_builder(){
     return map_builder_;
+  }
+
+  QMainWindow* Device::main_window(){
+    return main_window_;
+  }
+
+  NewTowerDialogCreator* Device::new_tower_dialog_creator(){
+    return new_tower_dialog_creator_;
+  }
+
+  DateBox* Device::date_box(){
+    return date_box_;
   }
 
 }

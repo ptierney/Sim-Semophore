@@ -39,6 +39,10 @@ namespace Sem {
     Tower* tower_1();
     Tower* tower_2();
 
+    Tile* tile();
+
+    QPointF getTrueCenter();
+
     ViewMode view_mode();
     void set_view_mode(ViewMode);
     float operating_percentage();
@@ -87,6 +91,8 @@ namespace Sem {
     QColor ellipse_color_;
     QColor ellipse_boarder_color_;
     QColor set_connection_color_;
+    QColor connection_color_;
+    float connection_line_width_;
 
     Connection current_connection_set_;
 

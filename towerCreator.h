@@ -24,6 +24,7 @@ namespace Sem {
     void build(); // Called by the main window
     void cancelBuilding();
     std::vector<Tower*>& towers();
+    void changeGlobally(); // Spawns a dialog
 
     Tile* last_hover_tile();
 

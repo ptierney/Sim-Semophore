@@ -10,8 +10,10 @@ namespace Sem {
   class Device;
 
   class GameState : public QObject {
+    Q_OBJECT
   public:
     GameState(Device*);
+    void init();
 
     const QDate& current_date();
     const QDate& end_date();
@@ -21,11 +23,11 @@ namespace Sem {
     void set_money(int);
 
     enum Title {
-      BOTTOM,
-      LOW,
-      MEDIUM,
-      HIGH,
-      HIGHEST
+      LEVEL_1,
+      LEVEL_2,
+      LEVEL_3,
+      LEVEL_4,
+      LEVEL_5
     };
 
     enum Rank {
@@ -36,10 +38,27 @@ namespace Sem {
       FIFTH
     };
 
+    enum GameSpeed {
+      SLOW,
+      MEDIUM,
+      FAST,
+      ELEVEN
+    };
+
+    enum Zoom {
+      NORMAL,
+      OUT_1,
+      OUT_2,
+      OUT_3
+    };
+
     Rank rank();
     QString rankString();
     Title title();
     QString titleString();
+
+    void set_zoom(Zoom);
+    void set_game_speed(GameSpeed);
 
     int grass_cost() { return grass_cost_; }
     int plane_cost() { return plane_cost_; }
@@ -49,6 +68,9 @@ namespace Sem {
     int city_cost() { return city_cost_; }
     int farm_cost() { return farm_cost_; }
     int railroad_cost() { return railroad_cost_; }
+
+  protected:
+    void timerEvent(QTimerEvent *);
 
   private:
     Device* d_;
@@ -72,6 +94,8 @@ namespace Sem {
     int farm_cost_;
     int railroad_cost_;
 
+    Zoom zoom_;
+    GameSpeed game_speed_;
   };
 
 }

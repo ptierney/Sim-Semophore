@@ -18,9 +18,9 @@ namespace Sem {
     set_tower_1_ = new QPushButton(tr("Set connecting tower #1"));
     set_tower_2_ = new QPushButton(tr("Set connecting tower #2"));
 
-    connect(set_tower_1_, SIGNAL(pressed()),
+    connect(set_tower_1_, SIGNAL(released()),
             this, SLOT(setTower1()));
-    connect(set_tower_2_, SIGNAL(pressed()),
+    connect(set_tower_2_, SIGNAL(released()),
             this, SLOT(setTower2()));
 
     createLayout();

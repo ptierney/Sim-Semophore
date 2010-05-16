@@ -22,6 +22,7 @@ namespace Sem {
   class DateBox;
   class InfoBox;
   class TowerCreator;
+  class NewTowerDialogCreator;
 
   class Device : public QObject {
     Q_OBJECT
@@ -33,11 +34,15 @@ namespace Sem {
 
     TileImageLoader* tile_image_loader();
     GameScene* game_scene();
+    GameView* game_view();
     MapChanger* map_changer();
     GameState* game_state();
     InfoBox* info_box();
     TowerCreator* tower_creator();
     MapBuilder* map_builder();
+    QMainWindow* main_window();
+    NewTowerDialogCreator* new_tower_dialog_creator();
+    DateBox* date_box();
 
     std::vector<QGraphicsTextItem*>& labels();
 
@@ -54,6 +59,7 @@ namespace Sem {
     DateBox* date_box_;
     InfoBox* info_box_;
     TowerCreator* tower_creator_;
+    NewTowerDialogCreator* new_tower_dialog_creator_;
 
     std::vector<QGraphicsTextItem*> labels_;
 
