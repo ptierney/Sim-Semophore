@@ -24,7 +24,9 @@ namespace Sem {
     QVBoxLayout* layout_rv = new QVBoxLayout();
     tower_image_ = new QLabel();
     date_created_ = new QLabel();
+    date_created_->setFont(*(d_->game_font()));
     tower_created_ = new QLabel();
+    tower_created_->setFont(*(d_->game_font()));
 
     tower_image_->setPixmap(main_image_);
     layout_lv->addWidget(tower_image_);
@@ -40,6 +42,7 @@ namespace Sem {
             parent, SLOT(close()));
     push->setMaximumWidth(100);
     push->setMinimumHeight(80);
+    push->setFont(*(d_->game_font()));
 
     layout_rv->addWidget(push);
     layout_rv->addSpacing(50);

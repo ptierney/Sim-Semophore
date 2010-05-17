@@ -30,6 +30,8 @@ namespace Sem {
     int num_tiles_x();
     int num_tiles_y();
 
+    int num_cities();
+
     std::vector<Tile*>& map_tiles();
 
   private:
@@ -40,6 +42,8 @@ namespace Sem {
 
     int num_tiles_x_;
     int num_tiles_y_;
+
+    int num_cities_;
 
     std::vector<Tile*> map_tiles_;
   };

@@ -26,6 +26,7 @@ namespace Sem {
     QLabel* money_;
     QLabel* title_;
     QLabel* rank_;
+    QLabel* cities_connected_;
   };
 }
 

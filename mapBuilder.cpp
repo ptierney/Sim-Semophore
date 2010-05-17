@@ -19,6 +19,7 @@ namespace Sem {
     config_file_name_ = "config.txt";
     num_tiles_x_ = 250;
     num_tiles_y_ = 250 * 2;
+    num_cities_ = 0;
   }
 
   void MapBuilder::init() {
@@ -58,6 +59,8 @@ namespace Sem {
     TileImageLoader::TileType type;
     int parse;
     int x_pos;
+    std::vector<QString> cities;
+    std::vector<QString>::iterator cities_it;
 
     bool hit_sea;
 
@@ -217,6 +220,19 @@ namespace Sem {
         else
           show_text = false;
 
+
+
+        if(list[9] != tr("frontiere")){
+          cities_it = find(cities.begin(), cities.end(), list[9]);
+
+          if(cities_it == cities.end()){
+            num_cities_++;
+            cities.push_back(list[9]);
+          }
+
+        }
+
+
         x_pos = x * x_spacing;
         if(y % 2 == 0)
            x_pos -= x_spacing / 2;
@@ -228,6 +244,8 @@ namespace Sem {
         map_tiles_.push_back(tile);
       }
     }
+
+    //std::cerr << "Num cities = " << num_cities << std::endl;
 
     config_file_->close();
   }
@@ -389,6 +407,10 @@ namespace Sem {
 
   std::vector<Tile*>& MapBuilder::map_tiles(){
     return map_tiles_;
+  }
+
+  int MapBuilder::num_cities(){
+    return num_cities_;
   }
 
 }

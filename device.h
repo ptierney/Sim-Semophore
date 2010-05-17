@@ -9,6 +9,7 @@ QT_BEGIN_NAMESPACE
 class QApplication;
 class QMainWindow;
 class QGraphicsTextItem;
+class QFont;
 QT_END_NAMESPACE
 
 namespace Sem {
@@ -45,6 +46,8 @@ namespace Sem {
     DateBox* date_box();
 
     std::vector<QGraphicsTextItem*>& labels();
+    QFont* game_font();
+    QFont* bold_font();
 
   private:
     QMainWindow* main_window_;
@@ -62,6 +65,9 @@ namespace Sem {
     NewTowerDialogCreator* new_tower_dialog_creator_;
 
     std::vector<QGraphicsTextItem*> labels_;
+
+    QFont* game_font_;
+    QFont* bold_font_;
 
     void createMapChanger();
     void createMiniMap();

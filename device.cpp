@@ -42,6 +42,9 @@ namespace Sem {
     game_view_->init();
     main_window_->setCentralWidget(game_view_);
 
+    game_font_ = new QFont("Times", 13.5);
+    bold_font_ = new QFont("Times", 14, QFont::Bold);
+
     createMapChanger();
 
     game_state_ = new GameState(this);
@@ -149,6 +152,14 @@ namespace Sem {
 
   DateBox* Device::date_box(){
     return date_box_;
+  }
+
+  QFont* Device::game_font(){
+    return game_font_;
+  }
+
+  QFont* Device::bold_font(){
+    return bold_font_;
   }
 
 }

@@ -81,6 +81,13 @@ namespace Sem {
     void set_speed_4(int);
     void set_speed_5(int);
 
+    int pay_rate();
+    int speed_1();
+    int speed_2();
+    int speed_3();
+    int speed_4();
+    int speed_5();
+
     float getAccuracy();
     float getMessageRate();
     int collectMoney();

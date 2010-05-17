@@ -34,6 +34,7 @@ namespace Sem {
 
     void updateTowers(int days);
     int collectMoney();
+    int getCitiesConnected();
 
   private:
     Device* d_;

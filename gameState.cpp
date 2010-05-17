@@ -19,9 +19,9 @@ namespace Sem {
     money_ = 58400;
 
     title_map_[LEVEL_1] = QString("Inenieur Telegraphe");
-    title_map_[LEVEL_2] = tr("Bonne");
+    title_map_[LEVEL_2] = tr("Ministre des Telegraphes");
     title_map_[LEVEL_3] = tr("Chevaliers de Legione d'Honneur");
-    title_map_[LEVEL_4] = tr("Tres Bonne");
+    title_map_[LEVEL_4] = tr("President");
     title_map_[LEVEL_5] = tr("Napoleon V");
 
     rank_map_[FIRST] = tr("Lueutenant");
@@ -38,6 +38,8 @@ namespace Sem {
     city_cost_ = 1000;
     farm_cost_ = 600;
     railroad_cost_ = -400;
+
+    cities_connected_ = 0;
 
     zoom_ = NORMAL;
     game_speed_ = MEDIUM;
@@ -111,6 +113,13 @@ namespace Sem {
     // Collect money
     money_ += d_->tower_creator()->collectMoney();
 
+    // Get cites
+    cities_connected_ = d_->tower_creator()->getCitiesConnected();
+
+    // Check Rank and Title
+    updateRank();
+    updateTitle();
+
     current_date_ = current_date_.addDays(day_jump);
     d_->date_box()->updateLabels();
     d_->date_box()->update();
@@ -154,6 +163,48 @@ namespace Sem {
 
   void GameState::updateTowers(int days){
     d_->tower_creator()->updateTowers(days);
+  }
+
+  // Rank is based on money
+  // 0-7 = 1
+  // 8-49 = 2
+  // 49-100 = 3
+  // 100-200 = 4
+  // >200 = 5
+  void GameState::updateTitle(){
+    if(cities_connected_ < 8 )
+    title_ = LEVEL_1;
+    else if(cities_connected_ < 50)
+    title_ = LEVEL_2;
+    else if(cities_connected_ < 100)
+    title_ = LEVEL_3;
+    else if(cities_connected_ < 200)
+    title_ = LEVEL_4;
+    else
+    title_ = LEVEL_5;
+  }
+
+  // Title is based on cities connected
+  // 0 - 65000
+  // 130000
+  // 260000
+  // 520000
+  // 1040000
+  void GameState::updateRank(){
+    if(money_ < 65000)
+      rank_ = FIRST;
+    else if(money_ < 130000)
+      rank_ = SECOND;
+    else if(money_ < 260000)
+      rank_ = THIRD;
+    else if(money_ < 520000)
+      rank_ = FORTH;
+    else
+      rank_ = FIFTH;
+  }
+
+  int GameState::cities_connected(){
+    return cities_connected_;
   }
 
 }

@@ -323,14 +323,31 @@ namespace Sem {
   }
 
   float Tower::getAccuracy(){
+    float accuracy = (float)(total_time_ - 7) / 53.0;
+    int max_pay = GameState::max_pay;
 
+    if(pay_rate_ < 4)
+      accuracy -= (float)(4 - pay_rate_) / 4.0;
+    else if(pay_rate_ > 4 && pay_rate_ <= max_pay)
+      accuracy += (float)(pay_rate_) / max_pay;
+    else if (pay_rate_ > max_pay)
+      return 1.0;
+
+    if(accuracy < 0.0)
+      accuracy = 0.0;
+
+    if(accuracy > 1.0)
+      accuracy = 1.0;
+
+    /*
     if(total_time_ <= 7)
       return 0.0;
 
     if(total_time_ > 60)
       return 1.0;
+      */
 
-    return (float)(total_time_ - 7) / 53.0;
+    return accuracy;
   }
 
   bool Tower::connected_to_paris(){
@@ -381,4 +398,29 @@ namespace Sem {
   float Tower::accuracy(){
     return accuracy_;
   }
+
+  int Tower::pay_rate(){
+    return pay_rate_;
+  }
+
+  int Tower::speed_1(){
+    return speed_1_;
+  }
+
+  int Tower::speed_2(){
+    return speed_2_;
+  }
+
+  int Tower::speed_3(){
+    return speed_3_;
+  }
+
+  int Tower::speed_4(){
+    return speed_4_;
+  }
+
+  int Tower::speed_5(){
+    return speed_5_;
+  }
+
 }

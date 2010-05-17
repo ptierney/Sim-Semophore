@@ -75,6 +75,9 @@ namespace Sem {
     static const int seconds_per_symbol_average = 30;
     static const int seconds_per_symbol_lower_bound = 7; // Fastest possible
     static const int message_price = 16;
+    static const int max_pay = 40;
+
+    int cities_connected();
 
   protected:
     void timerEvent(QTimerEvent *);
@@ -86,8 +89,8 @@ namespace Sem {
 
     int money_;
 
-    std::map<Title, QString> title_map_;
-    std::map<Rank, QString> rank_map_;
+    std::map<Title, QString> title_map_; // Title is based on money
+    std::map<Rank, QString> rank_map_; // Rank is based on cities connected
 
     Title title_;
     Rank rank_;
@@ -101,12 +104,14 @@ namespace Sem {
     int farm_cost_;
     int railroad_cost_;
 
-
+    int cities_connected_;
 
     Zoom zoom_;
     GameSpeed game_speed_;
 
     void updateTowers(int days);
+    void updateRank();
+    void updateTitle();
   };
 
 }

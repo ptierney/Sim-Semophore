@@ -22,19 +22,30 @@ namespace Sem {
 
   void InfoBox::init(){
     cost_ = new QLabel();
+    cost_->setFont(*(d_->game_font()));
     elevation_ = new QLabel();
+    elevation_->setFont(*(d_->game_font()));
     arrondissement_ = new QLabel();
+    arrondissement_->setFont(*(d_->game_font()));
     coordinates_ = new QLabel();
+    coordinates_->setFont(*(d_->game_font()));
     engineers_ = new QLabel();
     engineer_1_ = new QLabel();
     engineer_2_ = new QLabel();
     towers_ = new QLabel();
+    towers_->setFont(*(d_->bold_font()));
     tower_name_ = new QLabel();
+    tower_name_->setFont(*(d_->bold_font()));
     tower_1_ = new QLabel();
+    tower_1_->setFont(*(d_->game_font()));
     tower_2_ = new QLabel();
+    tower_2_->setFont(*(d_->game_font()));
     operating_since_ = new QLabel();
+    operating_since_->setFont(*(d_->game_font()));
     operating_percentage_ = new QLabel();
+    operating_percentage_->setFont(*(d_->game_font()));
     message_rate_ = new QLabel();
+    message_rate_->setFont(*(d_->game_font()));
 
     terrain_widget_ = new TerrainInfoWidget(d_, this, this);
     terrain_widget_->init();
@@ -166,6 +177,7 @@ namespace Sem {
   }
 
   void InfoBox::updateTowerValues(Tower* tower){
+    tower_widget_->current_tower_ = tower;
     tower_name_->setText(tower->name());
     engineers_->setText(tr("Engineers:"));
     engineer_1_->setText(tower->engineer_1()->name());
@@ -186,6 +198,40 @@ namespace Sem {
     } else {
       tower_2_->setText(tr("Nothing set"));
     }
+
+    tower_widget_->pay_label_->setText(tr("Set engineer pay:"));
+    //tower_widget_->pay_slider_->setValue(tower->pay_rate());
+    //tower_widget_->pay_->setText(QString().setNum(tower->pay_rate()));
+
+    tower_widget_->speeds_label_->setText(tr("Set tower operation speeds:"));
+
+    tower_widget_->pay_->setText(tr(" Fr.") + QString().setNum(tower->pay_rate()));
+    tower_widget_->pay_slider_->setValue(tower->pay_rate());
+
+    tower_widget_->speed_1_->setText(QString().setNum(tower->speed_1()) + tr(" sec."));
+    tower_widget_->speed_slider_1_->setValue(tower->speed_1());
+
+    tower_widget_->speed_2_->setText(QString().setNum(tower->speed_2()) + tr(" sec."));
+    tower_widget_->speed_slider_2_->setValue(tower->speed_2());
+
+    tower_widget_->speed_3_->setText(QString().setNum(tower->speed_3()) + tr(" sec."));
+    tower_widget_->speed_slider_3_->setValue(tower->speed_3());
+
+    tower_widget_->speed_4_->setText(QString().setNum(tower->speed_4()) + tr(" sec."));
+    tower_widget_->speed_slider_4_->setValue(tower->speed_4());
+
+    tower_widget_->speed_5_->setText(QString().setNum(tower->speed_5()) + tr(" sec."));
+    tower_widget_->speed_slider_5_->setValue(tower->speed_5());
+
+    /*
+    tower_widget_->payChanged(tower->pay_rate());
+    tower_widget_->speed1Changed(tower->speed_1());
+    tower_widget_->speed2Changed(tower->speed_2());
+    tower_widget_->speed3Changed(tower->speed_3());
+    tower_widget_->speed4Changed(tower->speed_4());
+    tower_widget_->speed5Changed(tower->speed_5());
+    */
+
     operating_since_->setText(tr("Operating since: ") +
                               tower->date_created().toString("dddd MMMM d, yyyy"));
     QString accuracy, balance, messages_sent, message_rate;

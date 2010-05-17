@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <algorithm>
 
 #include <towerCreator.h>
 #include <tile.h>
@@ -19,6 +20,7 @@ namespace Sem {
     last_hover_tile_ = NULL;
     last_click_tile_ = NULL;
     set_connection_tower_ = NULL;
+    active_tower_ = NULL;
   }
 
   void TowerCreator::init(){
@@ -133,6 +135,33 @@ namespace Sem {
     }
 
     return towers_balance;
+  }
+
+  int TowerCreator::getCitiesConnected(){
+    int num_cities = 0;
+
+    //std::cerr << towers_.size() << std::endl;
+
+    std::vector<QString> cities;
+    std::vector<QString>::iterator cities_it;
+    for(std::vector<Tower*>::const_iterator it = towers_.begin(); it != towers_.end(); ++it){
+      QString name = (*it)->tile()->arrondissement();
+
+      if((*it)->tower_1() == NULL &&
+         (*it)->tower_2() == NULL)
+        continue;
+
+      if(name == tr("frontiere"))
+        continue;
+
+      cities_it = find(cities.begin(), cities.end(), name);
+
+      if(cities_it == cities.end()){
+        num_cities++;
+        cities.push_back(name);
+      }
+    }
+    return num_cities;
   }
 
 }
