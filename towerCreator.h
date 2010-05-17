@@ -32,6 +32,9 @@ namespace Sem {
 
     void beginSettingConnection(Tower*, Tower::Connection);
 
+    void updateTowers(int days);
+    int collectMoney();
+
   private:
     Device* d_;
     bool active_;

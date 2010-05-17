@@ -35,7 +35,7 @@ namespace Sem {
     layout_rv->addWidget(tower_created_);
     layout_rv->addWidget(date_created_);
 
-    QPushButton* push = new QPushButton(tr("Tres Bien!"));
+    QPushButton* push = new QPushButton(tr("Tres bien!"));
     connect(push, SIGNAL(released()),
             parent, SLOT(close()));
     push->setMaximumWidth(100);

@@ -14,7 +14,8 @@ namespace Sem {
   class Tile : public QGraphicsObject {
     Q_OBJECT
   public:
-    Tile(Device*, QGraphicsItem* parent = 0);
+    Tile(Device*,
+         QGraphicsItem* parent = 0);
     void init();
 
     QRectF boundingRect() const;
@@ -24,9 +25,9 @@ namespace Sem {
 
     QPainterPath shape() const;
 
-    void set_axon_image(const QImage&, TileImageLoader::TileType, int, int);
-    void set_covering_terrain(const QImage&, TileImageLoader::TileType, int, int);
-    void set_covering_object(const QImage&, TileImageLoader::TileType, int, int);
+    void set_axon_image(QImage&, TileImageLoader::TileType, int, int);
+    void set_covering_terrain(QImage&, TileImageLoader::TileType, int, int);
+    void set_covering_object(QImage&, TileImageLoader::TileType, int, int);
 
     TileImageLoader::TileType terrain_type();
     TileImageLoader::TileType covering_terrain_type();
@@ -66,8 +67,6 @@ namespace Sem {
     QImage axon_image_;
     TileImageLoader::TileType terrain_type_;
     std::pair<int, int> terrain_index_;
-    QImage selected_icon_;
-    bool selected_;
     // Covering terrain is forest or mountains
     QImage covering_terrain_;
     bool terrain_covering_;
@@ -79,7 +78,10 @@ namespace Sem {
     TileImageLoader::TileType covering_object_type_;
     std::pair<int, int> covering_object_index_;
 
-    QImage tower_object_;
+    QImage selected_icon_;
+    bool selected_;
+
+    //QImage tower_object_;
     bool ghosted_tower_;
     QColor ellipse_color_;
 

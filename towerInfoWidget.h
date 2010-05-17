@@ -2,8 +2,7 @@
 #define TOWERINFOWIDGET_H
 
 #include <QWidget>
-
-#include <infoBox.h>
+#include <QtGui>
 
 namespace Sem {
   class Device;
@@ -17,6 +16,8 @@ namespace Sem {
 
     void createLayout();
 
+    friend class InfoBox;
+
   public slots:
     void setTower1();
     void setTower2();
@@ -28,8 +29,24 @@ namespace Sem {
 
     QVBoxLayout* layout_;
 
+    QLabel* connected_to_paris_;
+
     QPushButton* set_tower_1_;
     QPushButton* set_tower_2_;
+
+    QSlider* pay_slider_;
+
+    QHBoxLayout* speed_layout_;
+    QSlider* speed_slider_1_;
+    QSlider* speed_slider_2_;
+    QSlider* speed_slider_3_;
+    QSlider* speed_slider_4_;
+    QSlider* speed_slider_5_;
+
+    QLabel* accuracy_;
+    QLabel* total_balance_;
+    QLabel* total_messages_sent_;
+
   };
 }
 

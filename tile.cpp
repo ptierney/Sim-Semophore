@@ -15,8 +15,10 @@
 
 namespace Sem {
 
-  Tile::Tile(Device* d, QGraphicsItem* parent) :
-      QGraphicsObject(parent) {
+  Tile::Tile(Device* d,
+             QGraphicsItem* parent) :
+      QGraphicsObject(parent)
+  {
     d_ = d;
     width_ = 128;
     height_ = 64;
@@ -46,8 +48,7 @@ namespace Sem {
     setAcceptedMouseButtons(Qt::LeftButton);
     setAcceptsHoverEvents(true);
     //setFlag(QGraphicsItem::ItemClipsToShape, true);
-    selected_icon_ = d_->tile_image_loader()->loadImage(TileImageLoader::SELECT, 0, 0);
-    tower_object_ = d_->tile_image_loader()->loadImage(TileImageLoader::SEMAPHORE, 0, 0);
+    selected_icon_ = d_->tile_image_loader()->select_icon();
   }
 
   QRectF Tile::boundingRect() const{
@@ -96,7 +97,7 @@ namespace Sem {
 
   }
 
-  void Tile::set_axon_image(const QImage& image, TileImageLoader::TileType type, int x, int y){
+  void Tile::set_axon_image(QImage& image, TileImageLoader::TileType type, int x, int y){
     axon_image_ = image;
     terrain_type_ = type;
     terrain_index_.first = x;
@@ -107,7 +108,7 @@ namespace Sem {
     updateClipPath();
   }
 
-  void Tile::set_covering_terrain(const QImage& terrain, TileImageLoader::TileType type, int x, int y){
+  void Tile::set_covering_terrain(QImage& terrain, TileImageLoader::TileType type, int x, int y){
     covering_terrain_ = terrain;
     covering_terrain_type_ = type;
     covering_terrain_index_.first = x;
@@ -120,7 +121,7 @@ namespace Sem {
       elevation_ = 1500 + qrand() % 5000;
   }
 
-  void Tile::set_covering_object(const QImage& object, TileImageLoader::TileType type, int x, int y){
+  void Tile::set_covering_object(QImage& object, TileImageLoader::TileType type, int x, int y){
     covering_object_ = object;
     covering_object_type_ = type;
     covering_object_index_.first = x;

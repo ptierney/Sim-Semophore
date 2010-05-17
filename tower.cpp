@@ -14,7 +14,15 @@
 
 namespace Sem {
 
-  Tower::Tower(Device* d, Tile* tile){
+  Tower::Tower(Device* d, Tile* tile,
+               std::vector<QImage>& t_r,
+               std::vector<QImage>& t_l,
+               std::vector<QImage>& t_v,
+               std::vector<QImage>& t_h )
+                 : towers_r_(t_r),
+  towers_l_(t_l),
+  towers_v_(t_v),
+  towers_h_(t_h) {
     d_ = d;
     tile_ = tile;
     name_ = "Poste telegraphique de region sauvage";
@@ -33,6 +41,22 @@ namespace Sem {
     connection_color_ = QColor(255, 255, 0, 200);
     connection_line_width_ = 3;
     true_center_ = QPointF(0, -height_/2);
+
+    // Payment variables
+    pay_rate_ = 4;
+
+    total_messages_sent_ = 0;
+    total_days_ = 0;
+    balance_ = 0;
+    total_balance_ = 0;
+
+    speed_1_ = 4;
+    speed_2_ = 4;
+    speed_3_ = 4;
+    speed_4_ = 4;
+    speed_5_ = 4;
+
+    connected_to_paris_ = false;
   }
 
   void Tower::init(){
@@ -194,6 +218,10 @@ namespace Sem {
   }
 
   void Tower::setConnectingTower(Tower* tower, Connection connection){
+    if(tower_1_ == NULL && tower_2_ == NULL){
+      startTimer(2500);
+    }
+
     if(connection == TOWER_1)
       tower_1_ = tower;
     else if(connection == TOWER_2)
@@ -212,4 +240,145 @@ namespace Sem {
     return tile_;
   }
 
+  void Tower::timerEvent(QTimerEvent* /*event*/){
+    if(state_ == HORIZONTAL ||
+       state_ == VERTICAL){
+      if(qrand() % 2 == 0)
+        state_ = RIGHT;
+      else
+        state_ = LEFT;
+    } else {
+      if(qrand() % 2 == 0)
+        state_ = HORIZONTAL;
+      else
+        state_ = VERTICAL;
+    }
+
+    switch(state_){
+    case HORIZONTAL:
+      tower_image_ = towers_h_[qrand() % 11];
+      break;
+    case VERTICAL:
+      tower_image_ = towers_v_[qrand() % 6];
+      break;
+    case RIGHT:
+      tower_image_ = towers_r_[qrand() % 3];
+      break;
+    case LEFT:
+      tower_image_ = towers_l_[qrand() % 5];
+      break;
+    }
+
+    update();
+  }
+
+  void Tower::updateValues(int days){
+    checkConnectedToParis();
+
+    // Based on settings, determine how many messages
+    // this tower sent.
+    // If it is on a city square,
+    // and is connected to Paris
+    // it gets money.
+    total_days_ += days;
+    int hours_operating;
+    // If summer...
+    if(d_->game_state()->current_date().month() >= 4 &&
+       d_->game_state()->current_date().month() <= 9 ) {
+      hours_operating = 6 * days;
+    } else {
+      hours_operating = 3 * days;
+    }
+
+    message_rate_ = getMessageRate();
+    accuracy_ = getAccuracy();
+
+    int messages_sent;
+    if(tower_1_ || tower_2_)
+      messages_sent = hours_operating * message_rate_ * accuracy_;
+    else
+      messages_sent = 0;
+
+    if(connected_to_paris_ &&
+       tile_->arrondissement() != tr("frontiere") )
+      balance_ += messages_sent * GameState::message_price;
+
+    total_messages_sent_ += messages_sent;
+
+    // Subtract the payments for the workers
+    balance_ -= pay_rate_ * days * 2;
+
+    total_balance_ += balance_;
+  }
+
+  float Tower::getMessageRate(){
+    total_time_ = speed_1_ +
+                     speed_2_ +
+                     speed_3_ +
+                     speed_4_ +
+                     speed_5_;
+
+    float rate = 60.0 / (float)total_time_;
+    return rate;
+  }
+
+  float Tower::getAccuracy(){
+
+    if(total_time_ <= 7)
+      return 0.0;
+
+    if(total_time_ > 60)
+      return 1.0;
+
+    return (float)(total_time_ - 7) / 53.0;
+  }
+
+  bool Tower::connected_to_paris(){
+    return connected_to_paris_;
+  }
+
+  void Tower::checkConnectedToParis(){
+    connected_to_paris_ = parisTrace(this);
+  }
+
+  bool Tower::parisTrace(Tower* tower){
+    if(tower == NULL)
+      return false;
+
+    if(tower->tile()->arrondissement() == tr("Paris"))
+      return true;
+
+    if(tower->tower_2() == NULL)
+      return false;
+
+    return parisTrace(tower->tower_2());
+  }
+
+  int Tower::collectMoney(){
+    int temp_balance = balance_;
+    balance_ = 0;
+    return temp_balance;
+  }
+
+  void Tower::set_pay_rate(int pay){
+    pay_rate_ = pay;
+  }
+
+  void Tower::set_speed_1(int speed){ speed_1_ = speed; }
+  void Tower::set_speed_2(int speed){ speed_2_ = speed; }
+  void Tower::set_speed_3(int speed){ speed_3_ = speed; }
+  void Tower::set_speed_4(int speed){ speed_4_ = speed; }
+  void Tower::set_speed_5(int speed){ speed_5_ = speed; }
+
+  int Tower::total_balance(){
+    return total_balance_;
+  }
+
+  int Tower::total_messages_sent(){
+    return total_messages_sent_;
+  }
+
+  float Tower::accuracy(){
+    return accuracy_;
+  }
 }

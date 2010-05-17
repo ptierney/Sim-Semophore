@@ -40,7 +40,7 @@ namespace Sem {
     current_date_->setText(tr("Current Date: ") +
                            d_->game_state()->current_date().toString(tr("MMMM d, yyyy")));
     current_date_->update();
-    end_date_->setText(tr("Electrification of telegraphs: ") +
+    end_date_->setText(tr("Telegraph Electrification: ") +
                        d_->game_state()->end_date().toString(tr("MMMM d, yyyy")));
     QString days_remaining;
     days_remaining.setNum(d_->game_state()->daysRemaining());

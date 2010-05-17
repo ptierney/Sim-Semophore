@@ -32,15 +32,46 @@ namespace Sem {
     river_image_.load("media/rivers.png");
     sea_image_.load("media/s.png");
     semaphore_image_.load("media/semaphore.png");
+
+    select_icon_ = loadImage(TileImageLoader::SELECT, 0, 0);
+
+    towers_r_.push_back(QImage(tr("animation/sem_r1.png")));
+    towers_r_.push_back(QImage(tr("animation/sem_r2.png")));
+    towers_r_.push_back(QImage(tr("animation/sem_r3.png")));
+
+    towers_l_.push_back(QImage(tr("animation/sem_l1.png")));
+    towers_l_.push_back(QImage(tr("animation/sem_l2.png")));
+    towers_l_.push_back(QImage(tr("animation/sem_l3.png")));
+    towers_l_.push_back(QImage(tr("animation/sem_l4.png")));
+    towers_l_.push_back(QImage(tr("animation/sem_l5.png")));
+
+    towers_v_.push_back(QImage(tr("animation/sem_v1.png")));
+    towers_v_.push_back(QImage(tr("animation/sem_v2.png")));
+    towers_v_.push_back(QImage(tr("animation/sem_v3.png")));
+    towers_v_.push_back(QImage(tr("animation/sem_v4.png")));
+    towers_v_.push_back(QImage(tr("animation/sem_v5.png")));
+    towers_v_.push_back(QImage(tr("animation/sem_v6.png")));
+
+    towers_h_.push_back(QImage(tr("animation/sem_h1.png")));
+    towers_h_.push_back(QImage(tr("animation/sem_h2.png")));
+    towers_h_.push_back(QImage(tr("animation/sem_h3.png")));
+    towers_h_.push_back(QImage(tr("animation/sem_h4.png")));
+    towers_h_.push_back(QImage(tr("animation/sem_h5.png")));
+    towers_h_.push_back(QImage(tr("animation/sem_h6.png")));
+    towers_h_.push_back(QImage(tr("animation/sem_h7.png")));
+    towers_h_.push_back(QImage(tr("animation/sem_h8.png")));
+    towers_h_.push_back(QImage(tr("animation/sem_h9.png")));
+    towers_h_.push_back(QImage(tr("animation/sem_h10.png")));
+    towers_h_.push_back(QImage(tr("animation/sem_h11.png")));
   }
 
-  QImage TileImageLoader::loadImage(TileType tile_type, int x_index, int y_index){
+  QImage& TileImageLoader::loadImage(TileType tile_type, int x_index, int y_index){
     QImage* temp_image;
     int image_height;
 
-    QImage found_image = image_cache_[tile_type][x_index][y_index];
+    QImage& found_image = image_cache_[tile_type][x_index][y_index];
     if( found_image.width() != 0 )
-      return found_image;
+      return found_image;//image_cache_[tile_type][x_index][y_index];
 
     switch(tile_type) {
     case CITY:
@@ -108,9 +139,8 @@ namespace Sem {
       image_height = TILE_HEIGHT;
     }
 
-    found_image = cropImage(*temp_image, x_index, y_index, image_height);
-    image_cache_[tile_type][x_index][y_index] = found_image;
-    return found_image;
+    image_cache_[tile_type][x_index][y_index] = cropImage(*temp_image, x_index, y_index, image_height);
+    return image_cache_[tile_type][x_index][y_index];
   }
 
   QImage TileImageLoader::cropImage(const QImage& image, int x_index, int y_index,
@@ -148,6 +178,30 @@ namespace Sem {
 
   int TileImageLoader::tile_height(){
     return TILE_HEIGHT;
+  }
+
+  std::vector<QImage>& TileImageLoader::towers_r(){
+    return towers_r_;
+  }
+
+  std::vector<QImage>& TileImageLoader::towers_l(){
+    return towers_l_;
+  }
+
+  std::vector<QImage>& TileImageLoader::towers_v(){
+    return towers_v_;
+  }
+
+  std::vector<QImage>& TileImageLoader::towers_h(){
+    return towers_h_;
+  }
+
+  QImage& TileImageLoader::null_image(){
+    return null_image_;
+  }
+
+  QImage& TileImageLoader::select_icon(){
+    return select_icon_;
   }
 
 }

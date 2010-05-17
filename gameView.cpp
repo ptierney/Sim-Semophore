@@ -38,9 +38,11 @@ namespace Sem {
                    game_scene_->DEFAULT_WINDOW_HEIGHT);
   }
 
+  /*
   void GameView::wheelEvent(QWheelEvent* event) {
     scaleView(pow((double)2, event->delta() / 540.0));
   }
+  */
 
   void GameView::scaleView(qreal scale_factor){
       scale(scale_factor, scale_factor);

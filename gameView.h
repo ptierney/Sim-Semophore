@@ -17,7 +17,9 @@ namespace Sem {
     static const bool USE_OPENGL = true;
 
   protected:
+    /*
     void wheelEvent(QWheelEvent* event);
+    */
     void scaleView(qreal);
 
   private:

@@ -25,10 +25,12 @@ namespace Sem {
     };
 
     void registerSelect(Tile*);
+    void updateValues();
 
   private:
     Device* d_;
     Tile* last_tile_;
+    Tile* current_tile_;
 
     TowerInfoWidget* tower_widget_;
     TerrainInfoWidget* terrain_widget_;

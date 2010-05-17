@@ -41,10 +41,19 @@ public:
   int tile_width();
   int tile_height();
 
-  QImage loadImage(TileType, int, int);
+  QImage& loadImage(TileType, int, int);
   void loadTest();
   QImage cropImage(const QImage&, int x_index, int y_index,
                    int image_height);
+
+  std::vector<QImage>& towers_r();
+  std::vector<QImage>& towers_l();
+  std::vector<QImage>& towers_v();
+  std::vector<QImage>& towers_h();
+
+  QImage& null_image();
+
+  QImage& select_icon();
 
 private:
   Device* d_;
@@ -64,6 +73,14 @@ private:
   QImage river_image_;
   QImage sea_image_;
   QImage semaphore_image_;
+
+  QImage null_image_;
+  QImage select_icon_;
+
+  std::vector<QImage> towers_r_;
+  std::vector<QImage> towers_l_;
+  std::vector<QImage> towers_v_;
+  std::vector<QImage> towers_h_;
 
   std::map<TileType, std::map<int, std::map<int, QImage> > > image_cache_;
 };

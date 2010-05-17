@@ -69,6 +69,13 @@ namespace Sem {
     int farm_cost() { return farm_cost_; }
     int railroad_cost() { return railroad_cost_; }
 
+    static const int winter_hours = 3;
+    static const int summer_hours = 6;
+    static const int seconds_per_symbol_min = 20;
+    static const int seconds_per_symbol_average = 30;
+    static const int seconds_per_symbol_lower_bound = 7; // Fastest possible
+    static const int message_price = 16;
+
   protected:
     void timerEvent(QTimerEvent *);
 
@@ -94,8 +101,12 @@ namespace Sem {
     int farm_cost_;
     int railroad_cost_;
 
+
+
     Zoom zoom_;
     GameSpeed game_speed_;
+
+    void updateTowers(int days);
   };
 
 }

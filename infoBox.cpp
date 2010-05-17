@@ -17,6 +17,7 @@ namespace Sem {
     terrain_layout_ = NULL;
     tower_layout_ = NULL;
     last_tile_ = NULL;
+    current_tile_ = NULL;
   }
 
   void InfoBox::init(){
@@ -102,15 +103,29 @@ namespace Sem {
   void InfoBox::registerSelect(Tile* tile){
     tile->set_selected(true);
     tile->update();
-    if(last_tile_){
+    if(last_tile_ &&
+       last_tile_ != tile){
       last_tile_->set_selected(false);
       last_tile_->update();
     }
-    if(tile->tower()){
+    current_tile_ = tile;
+    updateValues();
+
+    main_layout_->update();
+    main_widget_->update();
+    update();
+    last_tile_ = tile;
+  }
+
+  void InfoBox::updateValues(){
+    if(current_tile_ == NULL)
+      return;
+
+    if(current_tile_->tower()){
       tower_widget_->show();
 
-      updateTerrainValues(tile);
-      updateTowerValues(tile->tower());
+      updateTerrainValues(current_tile_);
+      updateTowerValues(current_tile_->tower());
       tower_widget_->createLayout();
 
       main_layout_->removeWidget(main_widget_);
@@ -121,7 +136,7 @@ namespace Sem {
     } else {
       terrain_widget_->show();
 
-      updateTerrainValues(tile);
+      updateTerrainValues(current_tile_);
       terrain_widget_->createLayout();
 
       main_layout_->removeWidget(main_widget_);
@@ -130,10 +145,7 @@ namespace Sem {
 
       tower_widget_->hide();
     }
-    main_layout_->update();
-    main_widget_->update();
-    update();
-    last_tile_ = tile;
+
   }
 
   void InfoBox::updateTerrainValues(Tile* tile){
@@ -158,7 +170,12 @@ namespace Sem {
     engineers_->setText(tr("Engineers:"));
     engineer_1_->setText(tower->engineer_1()->name());
     engineer_2_->setText(tower->engineer_2()->name());
-    towers_->setText(tr("Connected towers"));
+    if(tower->connected_to_paris())
+      tower_widget_->connected_to_paris_->setText(tr("Connected to Paris: YES"));
+    else
+      tower_widget_->connected_to_paris_->setText(tr("Connected to Paris: NO"));
+
+    towers_->setText(tr("Connected towers:"));
     if(tower->tower_1()){
       tower_1_->setText(tower->tower_1()->name());
     } else {
@@ -169,12 +186,20 @@ namespace Sem {
     } else {
       tower_2_->setText(tr("Nothing set"));
     }
-    operating_since_->setText(tr("Operating since:") +
+    operating_since_->setText(tr("Operating since: ") +
                               tower->date_created().toString("dddd MMMM d, yyyy"));
-    QString per;
-    per.setNum(tower->operating_percentage());
-    operating_percentage_->setText(tr("Operating percentage: ") + per + "%");
-    message_rate_->setText(tr("Message rate"));
+    QString accuracy, balance, messages_sent, message_rate;
+    accuracy.setNum((int)(tower->accuracy() * 100.0));
+    tower_widget_->accuracy_->setText(tr("Accuracy: ") + accuracy + tr("%"));
+
+    balance.setNum(tower->total_balance());
+    tower_widget_->total_balance_->setText(tr("Net profit: Fr. ") + balance);
+
+    messages_sent.setNum(tower->total_messages_sent());
+    tower_widget_->total_messages_sent_->setText(tr("Total messages transmitted: ") + messages_sent);
+
+    message_rate.setNum(tower->message_rate());
+    message_rate_->setText(tr("Sending ") + message_rate + tr(" messages a second."));
   }
 
   void InfoBox::deleteLayouts(){

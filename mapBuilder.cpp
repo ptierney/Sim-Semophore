@@ -138,10 +138,8 @@ namespace Sem {
         }
         */
 
-
-
-        temp_image = d_->tile_image_loader()->loadImage(type, index1, index2);
-        tile->set_axon_image(temp_image, type, index1, index2);
+        tile->set_axon_image(d_->tile_image_loader()->loadImage(type, index1, index2),
+                             type, index1, index2);
 
         parse = list[3].toInt();
         switch(parse){
@@ -174,8 +172,8 @@ namespace Sem {
         if(type != TileImageLoader::NONE){
           index1 = list[4].toInt();
           index2 = list[5].toInt();
-          temp_image = d_->tile_image_loader()->loadImage(type, index1, index2);
-          tile->set_covering_terrain(temp_image, type, index1, index2);
+          tile->set_covering_terrain(d_->tile_image_loader()->loadImage(type, index1, index2),
+                                     type, index1, index2);
         }
 
         parse = list[6].toInt();
@@ -208,8 +206,8 @@ namespace Sem {
         if(type != TileImageLoader::NONE){
           index1 = list[7].toInt();
           index2 = list[8].toInt();
-          temp_image = d_->tile_image_loader()->loadImage(type, index1, index2);
-          tile->set_covering_object(temp_image, type, index1, index2);
+          tile->set_covering_object(d_->tile_image_loader()->loadImage(type, index1, index2),
+                                    type, index1, index2);
         }
 
         tile->set_arrondissement(list[9]);

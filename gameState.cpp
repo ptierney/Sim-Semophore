@@ -5,6 +5,8 @@
 #include <device.h>
 #include <dateBox.h>
 #include <gameView.h>
+#include <towerCreator.h>
+#include <infoBox.h>
 
 namespace Sem {
 
@@ -42,7 +44,7 @@ namespace Sem {
   }
 
   void GameState::init(){
-    startTimer(1000);
+    startTimer(2000);
   }
 
   int GameState::daysRemaining(){
@@ -104,9 +106,16 @@ namespace Sem {
       break;
     }
 
+    updateTowers(day_jump);
+
+    // Collect money
+    money_ += d_->tower_creator()->collectMoney();
+
     current_date_ = current_date_.addDays(day_jump);
     d_->date_box()->updateLabels();
     d_->date_box()->update();
+    d_->info_box()->updateValues();
+    d_->info_box()->update();
   }
 
   void GameState::set_zoom(Zoom zoom){
@@ -141,6 +150,10 @@ namespace Sem {
 
   void GameState::set_game_speed(GameSpeed speed){
     game_speed_ = speed;
+  }
+
+  void GameState::updateTowers(int days){
+    d_->tower_creator()->updateTowers(days);
   }
 
 }

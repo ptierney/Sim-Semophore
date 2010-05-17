@@ -31,7 +31,11 @@ namespace Sem {
 
     active_ = true;
 
-    active_tower_ = new Tower(d_, last_hover_tile_);
+    active_tower_ = new Tower(d_, last_hover_tile_,
+                              d_->tile_image_loader()->towers_r(),
+                              d_->tile_image_loader()->towers_l(),
+                              d_->tile_image_loader()->towers_v(),
+                              d_->tile_image_loader()->towers_h() );
     active_tower_->init();
     active_tower_->set_view_mode(Tower::RANGE);
     towers_.push_back(active_tower_);
@@ -88,7 +92,7 @@ namespace Sem {
     return last_hover_tile_;
   }
 
-  void TowerCreator::mousePressEvent(Tower* sending_tower, QGraphicsSceneMouseEvent* event){
+  void TowerCreator::mousePressEvent(Tower* sending_tower, QGraphicsSceneMouseEvent* /*event*/){
     if(set_connection_tower_ && set_connection_tower_ != sending_tower){
       set_connection_tower_->setConnectingTower(sending_tower,
                                                 set_connection_type_);
@@ -114,6 +118,21 @@ namespace Sem {
 
   void TowerCreator::changeGlobally(){
 
+  }
+
+  void TowerCreator::updateTowers(int days){
+    for(std::vector<Tower*>::const_iterator it = towers_.begin(); it != towers_.end(); ++it){
+      (*it)->updateValues(days);
+    }
+  }
+
+  int TowerCreator::collectMoney(){
+    int towers_balance = 0;
+    for(std::vector<Tower*>::const_iterator it = towers_.begin(); it != towers_.end(); ++it){
+      towers_balance += (*it)->collectMoney();
+    }
+
+    return towers_balance;
   }
 
 }

@@ -45,7 +45,7 @@ namespace Sem {
       tower_image = wild_images_[ran_index];
     }
 
-    std::cerr << tower_image.width() << std::endl;
+    //std::cerr << tower_image.width() << std::endl;
 
     QDockWidget* dock = new QDockWidget(tower->name(), d_->main_window());
     NewTowerDialog* dialog = new NewTowerDialog(d_, tower, tower_image);

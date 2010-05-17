@@ -14,7 +14,11 @@ namespace Sem {
     Q_OBJECT
 
   public:
-    Tower(Device*, Tile*);
+    Tower(Device*, Tile*,
+          std::vector<QImage>& t_r,
+          std::vector<QImage>& t_l,
+          std::vector<QImage>& t_v,
+          std::vector<QImage>& t_h );
     void init();
 
     enum ViewMode {
@@ -28,6 +32,13 @@ namespace Sem {
     enum Connection {
       TOWER_1,
       TOWER_2
+    };
+
+    enum State {
+      HORIZONTAL,
+      VERTICAL,
+      RIGHT,
+      LEFT
     };
 
     void set_tile(Tile*);
@@ -45,8 +56,7 @@ namespace Sem {
 
     ViewMode view_mode();
     void set_view_mode(ViewMode);
-    float operating_percentage();
-    float message_rate();
+
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -59,6 +69,28 @@ namespace Sem {
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
+    void timerEvent(QTimerEvent*);
+
+    void updateValues(int days);
+    bool connected_to_paris();
+
+    void set_pay_rate(int);
+    void set_speed_1(int);
+    void set_speed_2(int);
+    void set_speed_3(int);
+    void set_speed_4(int);
+    void set_speed_5(int);
+
+    float getAccuracy();
+    float getMessageRate();
+    int collectMoney();
+    int total_balance();
+    int total_messages_sent();
+
+    float accuracy();
+    float message_rate();
+    float operating_percentage(); // This doesn't do anything
+
   private:
     Device* d_;
     Tile* tile_;
@@ -69,16 +101,19 @@ namespace Sem {
     Engineer* engineer_1_;
     Engineer* engineer_2_;
 
-    Tower* tower_1_;
-    Tower* tower_2_;
+    Tower* tower_1_; // Tower towards frontier
+    Tower* tower_2_; // Tower towards Paris
 
     int messages_sent_;
     int mistakes_;
 
     float operating_percentage_;
     float message_rate_;
+    float accuracy_;
 
     float range_;
+
+    bool connected_to_paris_;
 
     ViewMode view_mode_;
     QRectF draw_rect_;
@@ -98,6 +133,30 @@ namespace Sem {
 
     void drawTower(QPainter*);
     int getRangeFromElevation(int);
+
+    State state_;
+    int balance_; // Money owed or gained
+    int total_balance_;
+    int total_days_;
+    int total_messages_sent_;
+
+    int last_update_month_;
+
+    int pay_rate_; // Amount an engineer earns per day
+    int speed_1_;
+    int speed_2_;
+    int speed_3_;
+    int speed_4_;
+    int speed_5_;
+    int total_time_;
+
+    const std::vector<QImage>& towers_r_;
+    const std::vector<QImage>& towers_l_;
+    const std::vector<QImage>& towers_v_;
+    const std::vector<QImage>& towers_h_;
+
+    void checkConnectedToParis();
+    bool parisTrace(Tower*);
   };
 
 }
