@@ -21,6 +21,7 @@ public:
   public slots:
     void buildSemaphore();
     void cancelBuilding();
+    void cancelConnection();
     void changeGlobally();
 
     void zoom1();
@@ -46,6 +47,7 @@ private:
     QMenu* zoom_menu_;
     QAction* build_semaphore_;
     QAction* cancel_building_;
+    QAction* cancel_connection_;
     QAction* change_global_settings_;
     QAction* zoom_1_;
     QAction* zoom_2_;

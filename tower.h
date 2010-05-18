@@ -53,6 +53,7 @@ namespace Sem {
     Tile* tile();
 
     QPointF getTrueCenter();
+    int getRange();
 
     ViewMode view_mode();
     void set_view_mode(ViewMode);

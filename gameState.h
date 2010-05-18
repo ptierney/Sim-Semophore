@@ -74,7 +74,7 @@ namespace Sem {
     static const int seconds_per_symbol_min = 20;
     static const int seconds_per_symbol_average = 30;
     static const int seconds_per_symbol_lower_bound = 7; // Fastest possible
-    static const int message_price = 16;
+    static const int message_price = 4;
     static const int max_pay = 40;
 
     int cities_connected();

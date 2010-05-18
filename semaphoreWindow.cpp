@@ -42,6 +42,11 @@ void SemaphoreWindow::cancelBuilding(){
   d_->tower_creator()->cancelBuilding();
 }
 
+void SemaphoreWindow::cancelConnection(){
+  d_->tower_creator()->cancelConnection();
+
+}
+
 void SemaphoreWindow::changeGlobally(){
   d_->tower_creator()->changeGlobally();
 }
@@ -63,7 +68,12 @@ void SemaphoreWindow::createActions(){
   connect(cancel_building_, SIGNAL(triggered()),
           this, SLOT(cancelBuilding()));
 
+  cancel_connection_ = new QAction(tr("Cancel creating connection"), this);
+  connect(cancel_connection_, SIGNAL(triggered()),
+          this, SLOT(cancelConnection()));
+
   change_global_settings_ = new QAction(tr("Change semaphore settings globally..."), this);
+  change_global_settings_->setEnabled(false);
   connect(change_global_settings_, SIGNAL(triggered()),
           this, SLOT(changeGlobally()));
 
@@ -111,6 +121,7 @@ void SemaphoreWindow::createMenus() {
   build_menu_ = menuBar()->addMenu(tr("Build"));
   build_menu_->addAction(build_semaphore_);
   build_menu_->addAction(cancel_building_);
+  build_menu_->addAction(cancel_connection_);
   management_menu_ = menuBar()->addMenu(tr("Management"));
   management_menu_->addAction(change_global_settings_);
   speed_menu_ = menuBar()->addMenu(tr("Set Game Speed"));

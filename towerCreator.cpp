@@ -95,7 +95,23 @@ namespace Sem {
   }
 
   void TowerCreator::mousePressEvent(Tower* sending_tower, QGraphicsSceneMouseEvent* /*event*/){
+    // For creating a new connection
     if(set_connection_tower_ && set_connection_tower_ != sending_tower){
+      // Check the ranges to make sure that it's a valid selection
+      int c_tower_range = set_connection_tower_->getRange();
+      int s_tower_range = sending_tower->getRange();
+
+      float dy = (set_connection_tower_->pos().y()-
+                  sending_tower->pos().y()) * 2.0;
+      float dx = set_connection_tower_->pos().x() -
+                 sending_tower->pos().x();
+      float axon_distance = sqrt(dx*dx + dy*dy);
+
+      // WARNING RETURN CHECK THIS OUT!
+      if( c_tower_range < axon_distance ||
+          s_tower_range < axon_distance)
+        return;
+
       set_connection_tower_->setConnectingTower(sending_tower,
                                                 set_connection_type_);
       Tower::Connection other_type;
@@ -110,6 +126,14 @@ namespace Sem {
 
       set_connection_tower_ = NULL;
     }
+  }
+
+  void TowerCreator::cancelConnection(){
+    if(set_connection_tower_ == NULL)
+      return;
+
+    set_connection_tower_->set_view_mode(Tower::NORMAL);
+    set_connection_tower_ = NULL;
   }
 
   void TowerCreator::beginSettingConnection(Tower* tower, Tower::Connection setting_type){

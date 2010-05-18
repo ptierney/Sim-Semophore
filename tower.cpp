@@ -209,7 +209,11 @@ namespace Sem {
   // Logic for range: at 0 you get 6, plus a max of 4 for
   // hills, cities, etc.
   int Tower::getRangeFromElevation(int elevation){
-    return 4 * tile_width_ + elevation / 500.0 * tile_width_;
+    return 5 * tile_width_ + elevation / 500.0 * tile_width_;
+  }
+
+  int Tower::getRange(){
+    return getRangeFromElevation(tile_->elevation());
   }
 
   void Tower::beginSettingTower(Connection type){
@@ -362,7 +366,13 @@ namespace Sem {
     if(tower == NULL)
       return false;
 
-    if(tower->tile()->arrondissement() == tr("Paris"))
+    if(tower->tile()->arrondissement() == tr("Paris") ||
+       tower->tile()->arrondissement() == tr("Lille") ||
+       tower->tile()->arrondissement() == tr("Rennes") ||
+       tower->tile()->arrondissement() == tr("Bordeaux") ||
+       tower->tile()->arrondissement() == tr("Lyon") ||
+       tower->tile()->arrondissement() == tr("Metz")
+       )
       return true;
 
     if(tower->tower_2() == NULL)

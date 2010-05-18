@@ -23,6 +23,7 @@ namespace Sem {
 
     void build(); // Called by the main window
     void cancelBuilding();
+    void cancelConnection(); // Cancels creating a connection
     std::vector<Tower*>& towers();
     void changeGlobally(); // Spawns a dialog
 
